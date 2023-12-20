@@ -43,17 +43,29 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '.create' do
-    before do
-      stub_const('Foo', Class.new(described_class))
-      Foo.create_accessible_collection!
+    context 'with caching enabled' do
+      before do
+        stub_const('Foo', Class.new(described_class))
+        Foo.create_accessible_collection!
+      end
+
+      it 'generates a new instance of your model entity' do
+        expect(Foo.create({})).to be_a Foo
+      end
+
+      it 'will add the entity to the cache' do
+        expect { Foo.create({}) }.to change(Foo.foos, :length).by(1)
+      end
     end
 
-    it 'generates a new instance of your model entity' do
-      expect(Foo.create({})).to be_a Foo
-    end
+    context 'without caching enabled' do
+      before do
+        stub_const('Foo', Class.new(described_class))
+      end
 
-    it 'will add the entity to the cache' do
-      expect { Foo.create({}) }.to change(Foo.foos, :length).by(1)
+      it 'generates a new instance of your model entity' do
+        expect(Foo.create({})).to be_a Foo
+      end
     end
   end
 end

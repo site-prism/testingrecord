@@ -17,7 +17,7 @@ module TestingRecord
 
       def create(attributes)
         new(attributes).tap do |entity|
-          add_to_cache(entity)
+          add_to_cache(entity) if respond_to?(cache_name)
         end
       end
 
