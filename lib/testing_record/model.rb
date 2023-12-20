@@ -8,6 +8,8 @@ module TestingRecord
   class Model
     class << self
       # Create a cache of the entities, named according to the classname
+      #
+      # @return [Symbol]
       def create_accessible_collection!
         ivar_name = "@#{name}s"
         instance_variable_set(ivar_name, [])
