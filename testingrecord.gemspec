@@ -26,4 +26,6 @@ from any place inside your tests."
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "rspec", "~> 3.12"
+  spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.add_development_dependency "rake", "~> 13.0"
 end
