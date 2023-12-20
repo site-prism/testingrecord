@@ -21,7 +21,7 @@ RSpec.describe TestingRecord::Model do
         end
       end
 
-      it 'sets the singular model properties' do
+      it 'sets the plural model properties' do
         expect(model.instance_variable_get(:@type)).to eq(:plural)
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe TestingRecord::Model do
       expect(Foo).to respond_to(:foos)
     end
 
-    it 'auto-creates the cache as an empty array' do
+    it 'automatically creates the cache as an empty array' do
       expect(Foo.foos).to eq([])
     end
   end
@@ -49,7 +49,7 @@ RSpec.describe TestingRecord::Model do
         Foo.create_accessible_collection!
       end
 
-      it 'generates a new instance of your model entity' do
+      it 'generates a new instance of the model entity' do
         expect(Foo.create({})).to be_a Foo
       end
 
@@ -63,7 +63,7 @@ RSpec.describe TestingRecord::Model do
         stub_const('Foo', Class.new(described_class))
       end
 
-      it 'generates a new instance of your model entity' do
+      it 'generates a new instance of the model entity' do
         expect(Foo.create({})).to be_a Foo
       end
     end
