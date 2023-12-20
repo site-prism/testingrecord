@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/testingrecord/version'
+require_relative 'lib/testing_record/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'testingrecord'
-  spec.version = Testingrecord::VERSION
+  spec.version = TestingRecord::VERSION
   spec.authors = ['Luke Hill']
   spec.email = ['lukehill_uk@hotmail.com']
 
@@ -24,7 +24,6 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.12'
   spec.add_development_dependency 'rubocop', '~> 1.59.0'
   spec.add_development_dependency 'rubocop-performance', '~> 1.20.0'
