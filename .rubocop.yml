@@ -1,15 +1,18 @@
-inherit_from: .rubocop_todo.yml
+# This allows us to merge arrays for Exclude rules on AllCops or a specific cop
+inherit_mode:
+  merge:
+    - Exclude
+
+require:
+  - rubocop-performance
+  - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.1
+  NewCops: enable
 
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
-
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
+Gemspec/DevelopmentDependencies:
+  Enabled: false
 
 Layout/LineLength:
-  Max: 120
+  Max: 200
