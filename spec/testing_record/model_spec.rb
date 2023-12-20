@@ -41,4 +41,19 @@ RSpec.describe TestingRecord::Model do
       expect(Foo.foos).to eq([])
     end
   end
+
+  describe '.create' do
+    before do
+      stub_const('Foo', Class.new(described_class))
+      Foo.create_accessible_collection!
+    end
+
+    it 'generates a new instance of your model entity' do
+      expect(Foo.create({})).to be_a Foo
+    end
+
+    it 'will add the entity to the cache' do
+      expect { Foo.create({}) }.to change(Foo.foos, :length).by(1)
+    end
+  end
 end

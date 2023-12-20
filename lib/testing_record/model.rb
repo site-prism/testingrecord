@@ -11,9 +11,14 @@ module TestingRecord
       #
       # @return [Symbol]
       def create_accessible_collection!
-        ivar_name = "@#{name}s"
         instance_variable_set(ivar_name, [])
-        define_singleton_method(:"#{name}s") { instance_variable_get(ivar_name) }
+        define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
+      end
+
+      def create(attributes)
+        new(attributes).tap do |entity|
+          add_to_cache(entity)
+        end
       end
 
       # Set the type of model, this should be one of `:singular` or `:plural`
@@ -25,9 +30,23 @@ module TestingRecord
 
       private
 
-      def name
-        to_s.snake_case
+      def add_to_cache(entity)
+        # TODO: Cache entity as the current entity for model class
+        send(cache_name) << entity
+        # TODO: Add log message (Requires adding logger)
       end
+
+      def cache_name
+        :"#{to_s.snake_case}s"
+      end
+
+      def ivar_name
+        "@#{to_s.snake_case}s"
+      end
+    end
+
+    def initialize(attributes)
+      @attributes = attributes
     end
   end
 end
