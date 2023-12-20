@@ -14,5 +14,8 @@ AllCops:
 Gemspec/DevelopmentDependencies:
   Enabled: false
 
+Gemspec/RequireMFA:
+  Enabled: false
+
 Layout/LineLength:
   Max: 200
