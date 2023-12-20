@@ -8,6 +8,6 @@
 
 - Gem created release
 
-[Unreleased]: https://github.com/site-prism/testingrecord/compare/v0.2.0...HEAD
-[0.2.0]:      https://github.com/site-prism/testingrecord/compare/v0.1.0...v0.2.0
+[Unreleased]: https://github.com/site-prism/testingrecord/compare/v0.2...HEAD
+[0.2.0]:      https://github.com/site-prism/testingrecord/compare/0.1...v0.2
 [0.1.0]:      https://github.com/site-prism/testingrecord/commit/3777aec
