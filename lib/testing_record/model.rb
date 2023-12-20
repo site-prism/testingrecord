@@ -10,7 +10,9 @@ module TestingRecord
       # Create a cache of the entities, named according to the classname
       #
       # @return [Symbol]
-      def create_accessible_collection!
+      def caching(option)
+        return unless option == :enabled
+
         instance_variable_set(ivar_name, [])
         define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
       end

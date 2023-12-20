@@ -27,10 +27,10 @@ RSpec.describe TestingRecord::Model do
     end
   end
 
-  describe '.create_accessible_collection!' do
+  describe '.caching' do
     before do
       stub_const('Foo', Class.new(described_class))
-      Foo.create_accessible_collection!
+      Foo.caching :enabled
     end
 
     it 'generates a new reader class method for accessing the raw data' do
@@ -46,7 +46,7 @@ RSpec.describe TestingRecord::Model do
     context 'with caching enabled' do
       before do
         stub_const('Foo', Class.new(described_class))
-        Foo.create_accessible_collection!
+        Foo.caching :enabled
       end
 
       it 'generates a new instance of the model entity' do

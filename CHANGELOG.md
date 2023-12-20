@@ -1,7 +1,7 @@
 ## [Unreleased]
 ### Added
 - Validator `#type_valid?` for checking the initial type of a model
-- `.create_accessible_collection!` for generating the iVar and reader on the class
+- `.caching` option for generating the iVar and reader on the class
 
 ## [0.2.0] - 2023-12-20
 ### Changed
