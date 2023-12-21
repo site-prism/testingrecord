@@ -17,7 +17,7 @@ module TestingRecord
         define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
       end
 
-      def create(attributes)
+      def create(attributes = {})
         new(attributes).tap do |entity|
           add_to_cache(entity) if respond_to?(cache_name)
         end
@@ -46,6 +46,8 @@ module TestingRecord
         "@#{to_s.snake_case}s"
       end
     end
+
+    attr_reader :attributes
 
     def initialize(attributes)
       @attributes = attributes
