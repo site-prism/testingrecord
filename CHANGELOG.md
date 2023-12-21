@@ -1,7 +1,7 @@
 ## [Unreleased]
 ### Added
-- Validator `#type_valid?` for checking the initial type of a model
 - `.caching` option for generating the iVar and reader on the class
+- Validators `#type_valid?` and `#caching_valid?` for checking the inputs on the model
 
 ## [0.2.0] - 2023-12-20
 ### Changed
