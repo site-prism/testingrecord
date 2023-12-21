@@ -29,8 +29,10 @@ module TestingRecord
       # Set the type of model, this should be one of `:singular` or `:plural`
       #
       # @return [Symbol]
-      def type(type)
-        @type = type
+      def type(option)
+        raise Error, 'Invalid type option, must be :singular or :plural' unless type_valid?(option)
+
+        @type = option
       end
 
       private
