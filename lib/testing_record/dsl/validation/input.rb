@@ -6,6 +6,9 @@ module TestingRecord
       # [TestingRecord::DSL::Validation::Input]
       # Validations for direct inputs into creating models
       module Input
+        # Check whether the type is valid
+        #
+        # @return [Boolean]
         def type_valid?(input)
           type_validations.include?(input)
         end

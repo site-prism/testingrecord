@@ -24,6 +24,8 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'automation_helpers', '~> 5.0'
+
   spec.add_development_dependency 'rspec', '~> 3.12'
   spec.add_development_dependency 'rubocop', '~> 1.59.0'
   spec.add_development_dependency 'rubocop-performance', '~> 1.20.0'
