@@ -93,4 +93,22 @@ RSpec.describe TestingRecord::Model do
       end
     end
   end
+
+  describe '.property' do
+    context 'when not classified' do
+      let(:model) do
+        Class.new(TestingRecord::Model) do
+          property :bar
+        end
+      end
+
+      it 'sets the property as a singular type' do
+        expect(model).to respond_to(:bar)
+      end
+
+      it 'stores the property as a singular type' do
+        expect(model.properties).to include({name: :bar, type: :singular})
+      end
+    end
+  end
 end

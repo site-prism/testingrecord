@@ -20,6 +20,9 @@ module TestingRecord
         define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
       end
 
+      # Creates an instance of the model, adding it to the cache if caching is enabled
+      #
+      # @return [TestingRecord::Model]
       def create(attributes = {})
         new(attributes).tap do |entity|
           add_to_cache(entity) if respond_to?(cache_name)
