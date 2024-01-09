@@ -6,11 +6,14 @@ module TestingRecord
   # The top level Model. Most of the behaviours specified here are fairly rudimentary ones that will then
   # include other behaviour(s), from the included modules
   class Model
+    extend DSL::Validation::Input
+
     class << self
       # Create a cache of the entities, named according to the classname
       #
       # @return [Symbol]
       def caching(option)
+        raise Error, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
         return unless option == :enabled
 
         instance_variable_set(ivar_name, [])
@@ -26,8 +29,10 @@ module TestingRecord
       # Set the type of model, this should be one of `:singular` or `:plural`
       #
       # @return [Symbol]
-      def type(type)
-        @type = type
+      def type(option)
+        raise Error, 'Invalid type option, must be :singular or :plural' unless type_valid?(option)
+
+        @type = option
       end
 
       private

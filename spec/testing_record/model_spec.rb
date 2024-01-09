@@ -25,6 +25,16 @@ RSpec.describe TestingRecord::Model do
         expect(model.instance_variable_get(:@type)).to eq(:plural)
       end
     end
+
+    context 'with an invalid type setting' do
+      before do
+        stub_const('Foo', Class.new(described_class))
+      end
+
+      it 'cannot be configured on the model' do
+        expect { Foo.type :invalid }.to raise_error(TestingRecord::Error)
+      end
+    end
   end
 
   describe '.caching' do
@@ -61,10 +71,21 @@ RSpec.describe TestingRecord::Model do
     context 'without caching enabled' do
       before do
         stub_const('Foo', Class.new(described_class))
+        Foo.caching :disabled
       end
 
       it 'generates a new instance of the model entity' do
         expect(Foo.create({})).to be_a Foo
+      end
+    end
+
+    context 'with an invalid caching setting' do
+      before do
+        stub_const('Foo', Class.new(described_class))
+      end
+
+      it 'cannot be configured on the model' do
+        expect { Foo.caching :invalid }.to raise_error(TestingRecord::Error)
       end
     end
   end
