@@ -77,6 +77,10 @@ RSpec.describe TestingRecord::Model do
       it 'generates a new instance of the model entity' do
         expect(Foo.create({})).to be_a Foo
       end
+
+      it 'does not generate a cache add the entity to the cache' do
+        expect(Foo).not_to respond_to(:foos)
+      end
     end
 
     context 'with an invalid caching setting' do
