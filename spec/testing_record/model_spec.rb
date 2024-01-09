@@ -60,11 +60,11 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'generates a new instance of the model entity' do
-        expect(Foo.create({})).to be_a Foo
+        expect(Foo.create).to be_a Foo
       end
 
       it 'will add the entity to the cache' do
-        expect { Foo.create({}) }.to change(Foo.foos, :length).by(1)
+        expect { Foo.create }.to change(Foo.foos, :length).by(1)
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'generates a new instance of the model entity' do
-        expect(Foo.create({})).to be_a Foo
+        expect(Foo.create).to be_a Foo
       end
 
       it 'does not generate a cache add the entity to the cache' do
@@ -102,12 +102,12 @@ RSpec.describe TestingRecord::Model do
         end
       end
 
-      it 'sets the property as a singular type' do
-        expect(model).to respond_to(:bar)
+      it 'sets the property as a method on the model instance' do
+        expect(model.create).to respond_to(:bar)
       end
 
-      it 'stores the property as a singular type' do
-        expect(model.properties).to include({name: :bar, type: :singular})
+      it 'stores the property as a singular type on the model' do
+        expect(model.properties).to include({ name: :bar, type: :singular })
       end
     end
   end
