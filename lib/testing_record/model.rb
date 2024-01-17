@@ -32,10 +32,14 @@ module TestingRecord
       # Sets a property on the model, this should have a name and an optional type (Defaults to `:singular`)
       #
       # @return [Array<Hash>]
-      def property(name, type = :singular)
+      def property(name, type: :singular)
         raise Error, 'Invalid type option, must be :singular or :plural' unless type_valid?(type)
 
-        attr_reader name
+        if type == :plural
+          attr_reader :"#{name}s"
+        else
+          attr_reader name
+        end
 
         properties << { name:, type: }
       end

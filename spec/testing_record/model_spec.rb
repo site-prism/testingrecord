@@ -110,5 +110,47 @@ RSpec.describe TestingRecord::Model do
         expect(model.properties).to include({ name: :bar, type: :singular })
       end
     end
+
+    context 'when classified as singular' do
+      let(:model) do
+        Class.new(TestingRecord::Model) do
+          property :bar, type: :singular
+        end
+      end
+
+      it 'sets the property as a method on the model instance' do
+        expect(model.create).to respond_to(:bar)
+      end
+
+      it 'stores the property as a singular type on the model' do
+        expect(model.properties).to include({ name: :bar, type: :singular })
+      end
+    end
+
+    context 'when classified as plural' do
+      let(:model) do
+        Class.new(TestingRecord::Model) do
+          property :bar, type: :plural
+        end
+      end
+
+      it 'sets the property as a method on the model instance' do
+        expect(model.create).to respond_to(:bars)
+      end
+
+      it 'stores the property as a singular type on the model' do
+        expect(model.properties).to include({ name: :bar, type: :plural })
+      end
+    end
+
+    context 'with an invalid type setting' do
+      before do
+        stub_const('Foo', Class.new(described_class))
+      end
+
+      it 'cannot be configured on the model' do
+        expect { Foo.property :bar, type: :invalid }.to raise_error(TestingRecord::Error)
+      end
+    end
   end
 end
