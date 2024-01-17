@@ -2,6 +2,8 @@
 ### Added
 - `.caching` option for generating the iVar and reader on the class
 - Validators `#type_valid?` and `#caching_valid?` are enabled for checking the inputs on the model
+- Properties can now be stored on the Model (All properties can be queried also)
+- First helper added to builder logic - the `#any?` helper that will detect if anything is present
 
 ## [0.2.0] - 2023-12-20
 ### Changed
