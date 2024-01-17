@@ -7,7 +7,7 @@ RSpec.describe TestingRecord::DSL::Validation::Input do
     end
   end
 
-  describe '#caching_valid?' do
+  describe '.caching_valid?' do
     it 'is `true` when the type is enabled' do
       expect(klazz.caching_valid?(:enabled)).to be true
     end
@@ -21,7 +21,7 @@ RSpec.describe TestingRecord::DSL::Validation::Input do
     end
   end
 
-  describe '#type_valid?' do
+  describe '.type_valid?' do
     it 'is `true` when the type is singular' do
       expect(klazz.type_valid?(:singular)).to be true
     end
