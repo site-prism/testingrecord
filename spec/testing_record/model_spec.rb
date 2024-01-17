@@ -60,11 +60,11 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'generates a new instance of the model entity' do
-        expect(Foo.create({})).to be_a Foo
+        expect(Foo.create).to be_a Foo
       end
 
       it 'will add the entity to the cache' do
-        expect { Foo.create({}) }.to change(Foo.foos, :length).by(1)
+        expect { Foo.create }.to change(Foo.foos, :length).by(1)
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'generates a new instance of the model entity' do
-        expect(Foo.create({})).to be_a Foo
+        expect(Foo.create).to be_a Foo
       end
 
       it 'does not generate a cache add the entity to the cache' do
@@ -90,6 +90,66 @@ RSpec.describe TestingRecord::Model do
 
       it 'cannot be configured on the model' do
         expect { Foo.caching :invalid }.to raise_error(TestingRecord::Error)
+      end
+    end
+  end
+
+  describe '.property' do
+    context 'when not classified' do
+      let(:model) do
+        Class.new(TestingRecord::Model) do
+          property :bar
+        end
+      end
+
+      it 'sets the property as a method on the model instance' do
+        expect(model.create).to respond_to(:bar)
+      end
+
+      it 'stores the property as a singular type on the model' do
+        expect(model.properties).to include({ name: :bar, type: :singular })
+      end
+    end
+
+    context 'when classified as singular' do
+      let(:model) do
+        Class.new(TestingRecord::Model) do
+          property :bar, type: :singular
+        end
+      end
+
+      it 'sets the property as a method on the model instance' do
+        expect(model.create).to respond_to(:bar)
+      end
+
+      it 'stores the property as a singular type on the model' do
+        expect(model.properties).to include({ name: :bar, type: :singular })
+      end
+    end
+
+    context 'when classified as plural' do
+      let(:model) do
+        Class.new(TestingRecord::Model) do
+          property :bar, type: :plural
+        end
+      end
+
+      it 'sets the property as a method on the model instance' do
+        expect(model.create).to respond_to(:bars)
+      end
+
+      it 'stores the property as a singular type on the model' do
+        expect(model.properties).to include({ name: :bar, type: :plural })
+      end
+    end
+
+    context 'with an invalid type setting' do
+      before do
+        stub_const('Foo', Class.new(described_class))
+      end
+
+      it 'cannot be configured on the model' do
+        expect { Foo.property :bar, type: :invalid }.to raise_error(TestingRecord::Error)
       end
     end
   end
