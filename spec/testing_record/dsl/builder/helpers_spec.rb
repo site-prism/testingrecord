@@ -4,19 +4,42 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
   subject(:instance) { klazz.new }
 
   describe '.add_helpers' do
-    let(:list_of_helpers) { [:any] }
-    let(:klazz) do
-      Class.new(TestingRecord::Model) do
-        property :foo
-        property :bar, type: :singular
-        property :baz, type: :plural
+    before { klazz.add_helpers }
+
+    context 'with a default property' do
+      let(:klazz) do
+        Class.new(TestingRecord::Model) do
+          property :foo
+        end
+      end
+
+      it 'will add the #any? helper to the model' do
+        expect(instance).to respond_to(:foo?)
       end
     end
 
-    before { klazz.add_helpers }
+    context 'with a singular property' do
+      let(:klazz) do
+        Class.new(TestingRecord::Model) do
+          property :bar, type: :singular
+        end
+      end
 
-    it 'will add each helper to the model, for all of the relevant properties' do
-      expect(instance).to respond_to(:foo?).and respond_to(:bar?).and respond_to(:bazs?)
+      it 'will add the #any? helper to the model' do
+        expect(instance).to respond_to(:bar?)
+      end
+    end
+
+    context 'with a plural property' do
+      let(:klazz) do
+        Class.new(TestingRecord::Model) do
+          property :baz, type: :plural
+        end
+      end
+
+      it 'will add the #any? helper to the model' do
+        expect(instance).to respond_to(:bazs?)
+      end
     end
   end
 

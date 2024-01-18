@@ -10,7 +10,13 @@ module TestingRecord
         #
         # @return [TestingRecord::Model]
         def add_helpers
-          
+          properties.each do |hash|
+            if hash[:type] == :singular
+              add_any_helper(hash[:name])
+            else
+              add_any_helper("#{hash[:name]}s")
+            end
+          end
         end
 
         # Add the boolean helper which will perform the `#any?` check on your instance
