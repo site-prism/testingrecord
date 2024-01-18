@@ -12,7 +12,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'will add the #any? helper to the model' do
+      it 'will add the #any? helper to the singular property of the model' do
         expect(instance).to respond_to(:foo?)
       end
     end
@@ -25,7 +25,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'will add the #any? helper to the model' do
+      it 'will add the #any? helper to the singular property of the model' do
         expect(instance).to respond_to(:bar?)
       end
     end
@@ -38,7 +38,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'will add the #any? helper to the model' do
+      it 'will add the #any? helper to the plural property of the model' do
         expect(instance).to respond_to(:bazs?)
       end
     end
