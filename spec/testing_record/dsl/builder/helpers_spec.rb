@@ -1,14 +1,31 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::DSL::Builder::Helpers do
-  subject(:klazz) do
-    Class.new do
-      extend TestingRecord::DSL::Builder::Helpers
+  subject(:instance) { klazz.new }
+
+  describe '.add_helpers' do
+    let(:list_of_helpers) { [:any] }
+    let(:klazz) do
+      Class.new(TestingRecord::Model) do
+        property :foo
+        property :bar, type: :singular
+        property :baz, type: :plural
+      end
+    end
+
+    before { klazz.add_helpers }
+
+    it 'will add each helper to the model, for all of the relevant properties' do
+      expect(instance).to respond_to(:foo?).and respond_to(:bar?).and respond_to(:bazs?)
     end
   end
 
   describe '.add_any_helper' do
-    subject(:instance) { klazz.new }
+    let(:klazz) do
+      Class.new do
+        extend TestingRecord::DSL::Builder::Helpers
+      end
+    end
 
     before { klazz.add_any_helper(:foo) }
 

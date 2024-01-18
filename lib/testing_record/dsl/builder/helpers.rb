@@ -6,6 +6,13 @@ module TestingRecord
       # [TestingRecord::DSL::Builder::Helpers]
       # Ways in which we can build in extra helper methods from building requests
       module Helpers
+        # Method to add all helpers
+        #
+        # @return [TestingRecord::Model]
+        def add_helpers
+          
+        end
+
         # Add the boolean helper which will perform the `#any?` check on your instance
         #
         # @return [TestingRecord::Model]
