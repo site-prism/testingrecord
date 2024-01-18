@@ -6,7 +6,7 @@ module TestingRecord
       # [TestingRecord::DSL::Builder::Helpers]
       # Ways in which we can build in extra helper methods from building requests
       module Helpers
-        # Method to add all helpers
+        # Method to add all helpers - Should be called last in the DSL invocations in the class definition
         #
         # @return [TestingRecord::Model]
         def add_helpers

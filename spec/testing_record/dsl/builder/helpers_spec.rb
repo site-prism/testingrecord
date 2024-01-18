@@ -4,12 +4,11 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
   subject(:instance) { klazz.new }
 
   describe '.add_helpers' do
-    before { klazz.add_helpers }
-
     context 'with a default property' do
       let(:klazz) do
         Class.new(TestingRecord::Model) do
           property :foo
+          add_helpers
         end
       end
 
@@ -22,6 +21,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
       let(:klazz) do
         Class.new(TestingRecord::Model) do
           property :bar, type: :singular
+          add_helpers
         end
       end
 
@@ -34,6 +34,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
       let(:klazz) do
         Class.new(TestingRecord::Model) do
           property :baz, type: :plural
+          add_helpers
         end
       end
 
