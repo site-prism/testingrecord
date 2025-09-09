@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/site-prism/testingrecord'
   }
 
-  spec.files = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
+  spec.files = Dir.glob('lib/**/*') + %w[LICENSE README.md]
   spec.require_paths = ['lib']
 
   spec.add_dependency 'automation_helpers', '~> 5.0'
