@@ -6,6 +6,19 @@ module TestingRecord
       # [TestingRecord::DSL::Builder::Helpers]
       # Ways in which we can build in extra helper methods from building requests
       module Helpers
+        # Method to add all helpers - Should be called last in the DSL invocations in the class definition
+        #
+        # @return [TestingRecord::Model]
+        def add_helpers
+          properties.each do |hash|
+            if hash[:type] == :singular
+              add_any_helper(hash[:name])
+            else
+              add_any_helper("#{hash[:name]}s")
+            end
+          end
+        end
+
         # Add the boolean helper which will perform the `#any?` check on your instance
         #
         # @return [TestingRecord::Model]
