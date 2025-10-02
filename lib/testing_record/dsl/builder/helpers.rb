@@ -10,14 +10,16 @@ module TestingRecord
         #
         # @return [TestingRecord::Model]
         def add_helpers
-          properties.each do |hash|
-            if hash[:type] == :singular
-              add_any_helper(hash[:name])
+          properties.each do |property|
+            if property[:type] == :singular
+              add_any_helper(property[:name])
             else
-              add_any_helper("#{hash[:name]}s")
+              add_any_helper("#{property[:name]}s")
             end
           end
         end
+
+        private
 
         # Add the boolean helper which will perform the `#any?` check on your instance
         #
@@ -27,18 +29,6 @@ module TestingRecord
             instance_variable_get(:"@#{name}").any?
           end
         end
-
-        # Check whether the type setting is valid
-        #
-        # @return [Boolean]
-        def type_valid?(input)
-          type_validations.include?(input)
-        end
-
-        private
-
-        def caching_validations = %i[enabled disabled]
-        def type_validations = %i[singular plural]
       end
     end
   end
