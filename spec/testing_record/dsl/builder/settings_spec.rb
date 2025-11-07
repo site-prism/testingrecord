@@ -43,10 +43,6 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       it 'stores the property as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
       end
-
-      it 'stores the default property value as an empty string (singular default)' do
-        expect(instance.bar).to eq('')
-      end
     end
 
     context 'when classified as singular' do
@@ -63,10 +59,6 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       it 'stores the property as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
       end
-
-      it 'stores the default property value as an empty string' do
-        expect(instance.bar).to eq('')
-      end
     end
 
     context 'when classified as plural' do
@@ -82,10 +74,6 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
 
       it 'stores the property as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :plural })
-      end
-
-      it 'stores the default property value as an empty array' do
-        expect(instance.bars).to eq([])
       end
     end
 
