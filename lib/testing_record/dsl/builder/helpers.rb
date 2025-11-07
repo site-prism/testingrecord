@@ -8,25 +8,23 @@ module TestingRecord
       module Helpers
         # Method to add all helpers - Should be called last in the DSL invocations in the class definition
         #
-        # @return [TestingRecord::Model]
+        # @return [Array]
         def add_helpers
           properties.each do |property|
-            if property[:type] == :singular
-              add_any_helper(property[:name])
-            else
-              add_any_helper("#{property[:name]}s")
-            end
+            add_presence_helper(property[:name], property[:type])
           end
         end
 
         private
 
-        # Add the boolean helper which will perform the `#any?` check on your instance
+        # Add the boolean helper which will perform a check to determine whether...
+        #   For singular / default categorisations, this checks if one has been set over the default empty value
+        #   For plural properties whether the array has any values
         #
         # @return [TestingRecord::Model]
-        def add_any_helper(name)
+        def add_presence_helper(name, type)
           define_method(:"#{name}?") do
-            instance_variable_get(:"@#{name}").any?
+            type == :plural ? send(:name).any? : send(:name).empty?
           end
         end
       end

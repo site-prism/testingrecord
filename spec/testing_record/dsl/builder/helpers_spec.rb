@@ -12,7 +12,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'adds the #any? helper to the singular property of the model' do
+      it 'adds the presence helper to check if the default property of the model (singular), has been set' do
         expect(instance).to respond_to(:foo?)
       end
     end
@@ -25,7 +25,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'adds the #any? helper to the singular property of the model' do
+      it 'adds the presence helper to check if the singular property of the model has been set' do
         expect(instance).to respond_to(:bar?)
       end
     end
@@ -38,8 +38,8 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'adds the #any? helper to the plural property of the model' do
-        expect(instance).to respond_to(:bazs?)
+      it 'adds the presence helper to check if the plural property of the model has any values' do
+        expect(instance).to respond_to(:baz?)
       end
     end
   end
