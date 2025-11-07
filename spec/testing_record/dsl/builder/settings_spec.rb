@@ -69,7 +69,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'sets the property as a method on the model instance' do
-        expect(instance).to respond_to(:bars)
+        expect(instance).to respond_to(:bar)
       end
 
       it 'stores the property as a singular type on the model' do

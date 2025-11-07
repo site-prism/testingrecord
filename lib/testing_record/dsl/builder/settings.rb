@@ -27,11 +27,7 @@ module TestingRecord
         def property(name, type: :singular)
           raise Error, 'Invalid type option, must be :singular or :plural' unless type_valid?(type)
 
-          if type == :singular
-            attr_reader name
-          else
-            attr_reader :"#{name}s"
-          end
+          attr_reader name
 
           properties << { name:, type: }
         end

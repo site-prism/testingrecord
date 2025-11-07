@@ -12,20 +12,21 @@ module TestingRecord
 
     attr_reader :attributes
 
-    # Creates an instance of the model
-    #   -> Adding it to the cache if caching is enabled
-    #   -> Creating iVar values for each property that was set
-    #     -> For now these will be set to `''` or `[]`
-    #
-    # @return [TestingRecord::Model]
-    def self.create(attributes = {})
-      new(attributes).tap do |entity|
-        add_to_cache(entity) if respond_to?(cache_name)
-        properties.each do |property|
-          if property[:type] == :singular
-            entity.instance_variable_set("@#{property[:name]}", '')
-          else
-            entity.instance_variable_set("@#{property[:name]}s", [])
+    class << self
+      attr_accessor :current
+
+      # Creates an instance of the model
+      #   -> Adding it to the cache if caching is enabled
+      #   -> Creating iVar values for each property that was set
+      #     -> For now these will be set to `''` or `[]`
+      #
+      # @return [TestingRecord::Model]
+      def create(attributes = {})
+        new(attributes).tap do |entity|
+          add_to_cache(entity) if respond_to?(cache_name)
+          properties.each do |property|
+            default_value = property[:type] == :singular ? '' : []
+            entity.instance_variable_set("@#{property[:name]}", default_value)
           end
         end
       end

@@ -58,7 +58,7 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'stores the default value of plural properties as an empty array' do
-        expect(instance.bazs).to eq([])
+        expect(instance.baz).to eq([])
       end
 
       it 'stores the default value of properties as an empty string (singular default)' do
