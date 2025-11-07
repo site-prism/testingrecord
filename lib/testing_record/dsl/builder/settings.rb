@@ -32,9 +32,9 @@ module TestingRecord
             add_to_cache(entity) if respond_to?(cache_name)
             properties.each do |property|
               if property[:type] == :singular
-                instance_variable_set("@#{property[:name]}", nil)
+                entity.instance_variable_set("@#{property[:name]}", nil)
               else
-                instance_variable_set("@#{property[:name]}s", [])
+                entity.instance_variable_set("@#{property[:name]}s", [])
               end
             end
           end

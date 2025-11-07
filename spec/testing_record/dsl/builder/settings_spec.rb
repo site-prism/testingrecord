@@ -69,6 +69,8 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
   end
 
   describe '.property' do
+    let(:instance) { refined_class.create }
+
     context 'when not classified' do
       let(:refined_class) do
         Class.new(klazz) do
@@ -77,11 +79,15 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'sets the property as a method on the model instance' do
-        expect(refined_class.create).to respond_to(:bar)
+        expect(instance).to respond_to(:bar)
       end
 
       it 'stores the property as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
+      end
+
+      it 'stores the default property value as `nil` (singular default)' do
+        expect(instance.bar).to be_nil
       end
     end
 
@@ -93,11 +99,15 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'sets the property as a method on the model instance' do
-        expect(refined_class.create).to respond_to(:bar)
+        expect(instance).to respond_to(:bar)
       end
 
       it 'stores the property as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
+      end
+
+      it 'stores the default property value as `nil`' do
+        expect(instance.bar).to be_nil
       end
     end
 
@@ -109,11 +119,15 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'sets the property as a method on the model instance' do
-        expect(refined_class.create).to respond_to(:bars)
+        expect(instance).to respond_to(:bars)
       end
 
       it 'stores the property as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :plural })
+      end
+
+      it 'stores the default property value as an empty array' do
+        expect(instance.bars).to eq([])
       end
     end
 
