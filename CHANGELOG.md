@@ -1,6 +1,7 @@
 ## [Unreleased]
 ### Added
 - Added iVars into model instantiation for each attribute in creation hash
+- Moved the majority of the model methods out to a new settings class to encapsulate settings of a model
 
 ## [0.3] - 2025-09-09
 ### Added
