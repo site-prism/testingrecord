@@ -28,6 +28,7 @@ module TestingRecord
             default_value = property[:type] == :singular ? '' : []
             entity.instance_variable_set("@#{property[:name]}", default_value)
           end
+          Model.current = entity
         end
       end
     end

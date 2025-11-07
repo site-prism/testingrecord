@@ -2,6 +2,16 @@
 
 RSpec.describe TestingRecord::Model do
   describe '.create' do
+    subject(:instance) { refined_class.create }
+
+    let(:refined_class) do
+      Class.new(described_class) do
+        property :bar, type: :singular
+        property :baz, type: :plural
+        property :bay
+      end
+    end
+
     context 'with caching enabled' do
       before do
         stub_const('SettingsTest', Class.new(described_class))
@@ -42,28 +52,22 @@ RSpec.describe TestingRecord::Model do
       end
     end
 
-    context 'with various types of a property defined' do
-      subject(:instance) { refined_class.create }
+    it 'stores the default value of singular properties as an empty string' do
+      expect(instance.bar).to eq('')
+    end
 
-      let(:refined_class) do
-        Class.new(described_class) do
-          property :bar, type: :singular
-          property :baz, type: :plural
-          property :bay
-        end
-      end
+    it 'stores the default value of plural properties as an empty array' do
+      expect(instance.baz).to eq([])
+    end
 
-      it 'stores the default value of singular properties as an empty string' do
-        expect(instance.bar).to eq('')
-      end
+    it 'stores the default value of properties as an empty string (singular default)' do
+      expect(instance.bay).to eq('')
+    end
 
-      it 'stores the default value of plural properties as an empty array' do
-        expect(instance.baz).to eq([])
-      end
+    it 'updates the `.current` status to the newly created entity' do
+      instance
 
-      it 'stores the default value of properties as an empty string (singular default)' do
-        expect(instance.bay).to eq('')
-      end
+      expect(described_class.current).to eq(instance)
     end
   end
 end
