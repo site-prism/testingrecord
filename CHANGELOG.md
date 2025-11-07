@@ -5,6 +5,11 @@
 - Added a `.current` cache to each model
 - When calling `Model.create` the output is stored as the current entity for the model in question
 
+### Changed
+- Improved the first "any" helper (Now renamed to presence), to check for more nuanced items
+  - For singular / default items, it checks the string is not empty
+  - For plural items, it still checks if any are present
+
 ## [0.3] - 2025-09-09
 ### Added
 - `.caching` option for generating the iVar and reader on the class
