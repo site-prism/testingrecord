@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'automation_helpers', '~> 5.0'
 
-  spec.add_development_dependency 'rspec', '~> 3.12'
-  spec.add_development_dependency 'rubocop', '~> 1.59.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.20.0'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.25.0'
+  spec.add_development_dependency 'rspec', '~> 3.13'
+  spec.add_development_dependency 'rubocop', '~> 1.81.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.25.0'
+  spec.add_development_dependency 'rubocop-rspec', '~> 3.7.0'
 end
