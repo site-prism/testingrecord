@@ -2,6 +2,8 @@
 ### Added
 - Added iVars into model instantiation for each attribute in creation hash
 - Moved the majority of the model methods out to a new settings class to encapsulate settings of a model
+- Added a `.current` cache to each model
+- When calling `Model.create` the output is stored as the current entity for the model in question
 
 ## [0.3] - 2025-09-09
 ### Added
