@@ -27,7 +27,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
   end
 
   describe '.property' do
-    let(:instance) { refined_class.create }
+    let(:instance) { refined_class.new }
 
     context 'when not classified' do
       let(:refined_class) do
@@ -44,8 +44,8 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
       end
 
-      it 'stores the default property value as `nil` (singular default)' do
-        expect(instance.bar).to be_nil
+      it 'stores the default property value as an empty string (singular default)' do
+        expect(instance.bar).to eq('')
       end
     end
 
@@ -64,8 +64,8 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
       end
 
-      it 'stores the default property value as `nil`' do
-        expect(instance.bar).to be_nil
+      it 'stores the default property value as an empty string' do
+        expect(instance.bar).to eq('')
       end
     end
 
