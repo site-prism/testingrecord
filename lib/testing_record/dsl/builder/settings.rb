@@ -21,25 +21,6 @@ module TestingRecord
           define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
         end
 
-        # Creates an instance of the model
-        #   -> Adding it to the cache if caching is enabled
-        #   -> Creating iVar values for each property that was set
-        #     -> For now these will be set to `''` or `[]`
-        #
-        # @return [TestingRecord::Model]
-        def create(attributes = {})
-          new(attributes).tap do |entity|
-            add_to_cache(entity) if respond_to?(cache_name)
-            properties.each do |property|
-              if property[:type] == :singular
-                entity.instance_variable_set("@#{property[:name]}", nil)
-              else
-                entity.instance_variable_set("@#{property[:name]}s", [])
-              end
-            end
-          end
-        end
-
         # Sets a property on the model, this should have a name and an optional type (Defaults to `:singular`)
         #
         # @return [Array<Hash>]
