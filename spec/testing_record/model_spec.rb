@@ -63,7 +63,7 @@ RSpec.describe TestingRecord::Model do
         expect(Foo.create).to be_a Foo
       end
 
-      it 'will add the entity to the cache' do
+      it 'adds the entity to the cache' do
         expect { Foo.create }.to change(Foo.foos, :length).by(1)
       end
     end
