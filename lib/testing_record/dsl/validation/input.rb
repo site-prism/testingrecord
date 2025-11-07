@@ -10,20 +10,20 @@ module TestingRecord
         #
         # @return [Boolean]
         def caching_valid?(input)
-          caching_validations.include?(input)
+          enabled_or_disabled.include?(input)
         end
 
         # Check whether the type setting is valid
         #
         # @return [Boolean]
         def type_valid?(input)
-          type_validations.include?(input)
+          singular_or_plural.include?(input)
         end
 
         private
 
-        def caching_validations = %i[enabled disabled]
-        def type_validations = %i[singular plural]
+        def enabled_or_disabled = %i[enabled disabled]
+        def singular_or_plural = %i[singular plural]
       end
     end
   end
