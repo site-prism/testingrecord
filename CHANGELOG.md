@@ -6,6 +6,7 @@
 - When calling `Model.create` the output is stored as the current entity for the model in question
 
 ### Changed
+- **Breaking change**: Renamed the `property` and `properties` methods to `attribute` and `attributes` respectively
 - Improved the first "any" helper (Now renamed to presence), to check for more nuanced items
   - For singular / default items, it checks the string is not empty
   - For plural items, it still checks if any are present
