@@ -29,7 +29,7 @@ RSpec.describe TestingRecord::Model do
       it 'updates the `.current` status to the newly created entity' do
         instance = SettingsTest.create
 
-        expect(described_class.current).to eq(instance)
+        expect(SettingsTest.current).to eq(instance)
       end
     end
 
