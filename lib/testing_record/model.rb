@@ -23,12 +23,11 @@ module TestingRecord
       # @return [TestingRecord::Model]
       def create(attributes = {})
         new(attributes).tap do |entity|
-          add_to_cache(entity) if respond_to?(cache_name)
           properties.each do |property|
             default_value = property[:type] == :singular ? '' : []
             entity.instance_variable_set("@#{property[:name]}", default_value)
           end
-          Model.current = entity
+          add_to_cache(entity) if respond_to?(cache_name)
         end
       end
     end

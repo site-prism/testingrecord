@@ -26,21 +26,21 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
     end
   end
 
-  describe '.property' do
+  describe '.attribute' do
     let(:instance) { refined_class.new }
 
     context 'when not classified' do
       let(:refined_class) do
         Class.new(klazz) do
-          property :bar
+          attribute :bar
         end
       end
 
-      it 'sets the property as a method on the model instance' do
+      it 'sets the attribute as a method on the model instance' do
         expect(instance).to respond_to(:bar)
       end
 
-      it 'stores the property as a singular type on the model' do
+      it 'stores the attribute as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
       end
     end
@@ -48,15 +48,15 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
     context 'when classified as singular' do
       let(:refined_class) do
         Class.new(klazz) do
-          property :bar, type: :singular
+          attribute :bar, type: :singular
         end
       end
 
-      it 'sets the property as a method on the model instance' do
+      it 'sets the attribute as a method on the model instance' do
         expect(instance).to respond_to(:bar)
       end
 
-      it 'stores the property as a singular type on the model' do
+      it 'stores the attribute as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :singular })
       end
     end
@@ -64,15 +64,15 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
     context 'when classified as plural' do
       let(:refined_class) do
         Class.new(klazz) do
-          property :bar, type: :plural
+          attribute :bar, type: :plural
         end
       end
 
-      it 'sets the property as a method on the model instance' do
+      it 'sets the attribute as a method on the model instance' do
         expect(instance).to respond_to(:bar)
       end
 
-      it 'stores the property as a singular type on the model' do
+      it 'stores the attribute as a singular type on the model' do
         expect(refined_class.properties).to include({ name: :bar, type: :plural })
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'cannot be configured on the model' do
-        expect { SettingsTest.property :bar, type: :invalid }.to raise_error(TestingRecord::Error)
+        expect { SettingsTest.attribute :bar, type: :invalid }.to raise_error(TestingRecord::Error)
       end
     end
   end

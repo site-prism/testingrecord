@@ -21,19 +21,19 @@ module TestingRecord
           define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
         end
 
-        # Sets a property on the model, this should have a name and an optional type (Defaults to `:singular`)
+        # Sets an attribute on the model, this should have a name and an optional type (Defaults to `:singular`)
         #
         # @return [Array<Hash>]
-        def property(name, type: :singular)
+        def attribute(name, type: :singular)
           raise Error, 'Invalid type option, must be :singular or :plural if specified' unless type_valid?(type)
 
           attr_reader name
 
-          properties << { name:, type: }
+          attributes << { name:, type: }
         end
 
-        def properties
-          @properties ||= []
+        def attributes
+          @attributes ||= []
         end
 
         # Set the type of model, this should be one of `:singular` or `:plural`
@@ -48,7 +48,7 @@ module TestingRecord
         private
 
         def add_to_cache(entity)
-          # TODO: Cache entity as the current entity for model class
+          Model.current = entity
           send(cache_name) << entity
           # TODO: Add log message (Requires adding logger)
         end
