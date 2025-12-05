@@ -41,7 +41,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'stores the attribute as a singular type on the model' do
-        expect(refined_class.properties).to include({ name: :bar, type: :singular })
+        expect(refined_class.attributes).to include({ name: :bar, type: :singular })
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'stores the attribute as a singular type on the model' do
-        expect(refined_class.properties).to include({ name: :bar, type: :singular })
+        expect(refined_class.attributes).to include({ name: :bar, type: :singular })
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'stores the attribute as a singular type on the model' do
-        expect(refined_class.properties).to include({ name: :bar, type: :plural })
+        expect(refined_class.attributes).to include({ name: :bar, type: :plural })
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
         end
       end
 
-      it 'sets the singular model properties' do
+      it 'sets the singular model attributes' do
         expect(refined_class.instance_variable_get(:@type)).to eq(:singular)
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
         end
       end
 
-      it 'sets the plural model properties' do
+      it 'sets the plural model attributes' do
         expect(refined_class.instance_variable_get(:@type)).to eq(:plural)
       end
     end

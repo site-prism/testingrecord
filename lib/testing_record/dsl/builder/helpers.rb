@@ -10,8 +10,8 @@ module TestingRecord
         #
         # @return [Array]
         def add_helpers
-          properties.each do |property|
-            add_presence_helper(property[:name], property[:type])
+          attributes.each do |attribute|
+            add_presence_helper(attribute[:name], attribute[:type])
           end
         end
 
@@ -19,7 +19,7 @@ module TestingRecord
 
         # Add the boolean helper which will perform a check to determine whether...
         #   For singular / default categorisations, this checks if one has been set over the default empty value
-        #   For plural properties whether the array has any values
+        #   For plural attributes whether the array has any values
         #
         # @return [TestingRecord::Model]
         def add_presence_helper(name, type)

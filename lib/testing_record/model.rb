@@ -21,11 +21,11 @@ module TestingRecord
       #     -> For now these will be set to `''` or `[]`
       #
       # @return [TestingRecord::Model]
-      def create(attributes = {})
+      def create(attributes = self.attributes)
         new(attributes).tap do |entity|
-          properties.each do |property|
-            default_value = property[:type] == :singular ? '' : []
-            entity.instance_variable_set("@#{property[:name]}", default_value)
+          attributes.each do |attribute|
+            default_value = attribute[:type] == :singular ? '' : []
+            entity.instance_variable_set("@#{attribute[:name]}", default_value)
           end
           add_to_cache(entity) if respond_to?(cache_name)
         end
