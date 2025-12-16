@@ -1,5 +1,18 @@
 ## [Unreleased]
 ### Added
+- Added iVars into model instantiation for each attribute in creation hash
+- Moved the majority of the model methods out to a new settings class to encapsulate settings of a model
+- Added a `.current` cache to each model
+- When calling `Model.create` the output is stored as the current entity for the model in question
+
+### Changed
+- **Breaking change**: Renamed the `property` and `properties` methods to `attribute` and `attributes` respectively
+- Improved the first "any" helper (Now renamed to presence), to check for more nuanced items
+  - For singular / default items, it checks the string is not empty
+  - For plural items, it still checks if any are present
+
+## [0.3] - 2025-09-09
+### Added
 - `.caching` option for generating the iVar and reader on the class
 - Validators `#type_valid?` and `#caching_valid?` are enabled for checking the inputs on the model
 - Properties can now be stored on the Model (All properties can be queried also)
@@ -15,6 +28,7 @@
 ### Added
 - Initial gem creation
 
-[Unreleased]: https://github.com/site-prism/testingrecord/compare/v0.2...HEAD
+[Unreleased]: https://github.com/site-prism/testingrecord/compare/v0.3...HEAD
+[0.3]:        https://github.com/site-prism/testingrecord/compare/0.2...v0.3
 [0.2]:        https://github.com/site-prism/testingrecord/compare/0.1...v0.2
 [0.1]:        https://github.com/site-prism/testingrecord/commit/3777aec

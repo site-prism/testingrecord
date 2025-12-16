@@ -8,37 +8,25 @@ module TestingRecord
       module Helpers
         # Method to add all helpers - Should be called last in the DSL invocations in the class definition
         #
-        # @return [TestingRecord::Model]
+        # @return [Array]
         def add_helpers
-          properties.each do |hash|
-            if hash[:type] == :singular
-              add_any_helper(hash[:name])
-            else
-              add_any_helper("#{hash[:name]}s")
-            end
+          attributes.each do |attribute|
+            add_presence_helper(attribute[:name], attribute[:type])
           end
-        end
-
-        # Add the boolean helper which will perform the `#any?` check on your instance
-        #
-        # @return [TestingRecord::Model]
-        def add_any_helper(name)
-          define_method(:"#{name}?") do
-            instance_variable_get(:"@#{name}").any?
-          end
-        end
-
-        # Check whether the type setting is valid
-        #
-        # @return [Boolean]
-        def type_valid?(input)
-          type_validations.include?(input)
         end
 
         private
 
-        def caching_validations = %i[enabled disabled]
-        def type_validations = %i[singular plural]
+        # Add the boolean helper which will perform a check to determine whether...
+        #   For singular / default categorisations, this checks if one has been set over the default empty value
+        #   For plural attributes whether the array has any values
+        #
+        # @return [TestingRecord::Model]
+        def add_presence_helper(name, type)
+          define_method(:"#{name}?") do
+            type == :plural ? send(:name).any? : send(:name).empty?
+          end
+        end
       end
     end
   end
