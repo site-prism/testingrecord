@@ -24,6 +24,7 @@ module TestingRecord
         new(attributes).tap do |entity|
           attributes.each do |attribute_key, attribute_value|
             entity.instance_variable_set("@#{attribute_key}", attribute_value)
+            attr_reader attribute_key
           end
           add_to_cache(entity) if respond_to?(cache_name)
         end
