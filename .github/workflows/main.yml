@@ -18,11 +18,11 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler: '2.4.22'
+          bundler: '2.5.23'
           bundler-cache: true
       - run: bundle exec rubocop
       - run: bundle exec rspec
