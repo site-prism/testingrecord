@@ -1,4 +1,7 @@
 ## [Unreleased]
+### Fixed
+- Removed the `type` config as this was broken, across both model and attribute
+- Properly determine the presence helper value based on the outputted value not the type inferred
 
 ## [0.4] - 2025-12-16
 ### Added

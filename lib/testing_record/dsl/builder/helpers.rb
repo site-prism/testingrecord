@@ -11,7 +11,7 @@ module TestingRecord
         # @return [Array]
         def add_helpers
           attributes.each do |attribute|
-            add_presence_helper(attribute[:name], attribute[:type])
+            add_presence_helper(attribute)
           end
         end
 
@@ -22,9 +22,10 @@ module TestingRecord
         #   For plural attributes whether the array has any values
         #
         # @return [TestingRecord::Model]
-        def add_presence_helper(name, type)
+        def add_presence_helper(name)
           define_method(:"#{name}?") do
-            type == :plural ? send(:name).any? : send(:name).empty?
+            obj = send(name)
+            !(obj.nil? || obj.empty?)
           end
         end
       end

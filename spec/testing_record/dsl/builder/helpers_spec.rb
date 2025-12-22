@@ -12,34 +12,30 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
         end
       end
 
-      it 'adds the presence helper to check if the default attribute of the model (singular), has been set' do
-        expect(instance).to respond_to(:foo?)
-      end
-    end
-
-    context 'with a singular attribute' do
-      let(:klazz) do
-        Class.new(TestingRecord::Model) do
-          attribute :bar, type: :singular
-          add_helpers
+      context 'adds the presence helper to check if the attribute in question is present' do
+        it 'is true for strings' do
+          expect(klazz.create({ foo: 'bar' }).foo?).to be true
         end
-      end
 
-      it 'adds the presence helper to check if the singular attribute of the model has been set' do
-        expect(instance).to respond_to(:bar?)
-      end
-    end
-
-    context 'with a plural attribute' do
-      let(:klazz) do
-        Class.new(TestingRecord::Model) do
-          attribute :baz, type: :plural
-          add_helpers
+        it 'is true for symbols' do
+          expect(klazz.create({ foo: :bar }).foo?).to be true
         end
-      end
 
-      it 'adds the presence helper to check if the plural attribute of the model has any values' do
-        expect(instance).to respond_to(:baz?)
+        it 'is true for non-empty arrays' do
+          expect(klazz.create({ foo: ['abc'] }).foo?).to be true
+        end
+
+        it 'is false for nil values' do
+          expect(klazz.create({ foo: nil }).foo?).to be false
+        end
+
+        it 'is false for empty arrays' do
+          expect(klazz.create({ foo: [] }).foo?).to be false
+        end
+
+        it 'is false for empty hashes' do
+          expect(klazz.create({ foo: {} }).foo?).to be false
+        end
       end
     end
   end
