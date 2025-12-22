@@ -17,15 +17,13 @@ module TestingRecord
 
       # Creates an instance of the model
       #   -> Adding it to the cache if caching is enabled
-      #   -> Creating iVar values for each property that was set
-      #     -> For now these will be set to `''` or `[]`
+      #   -> Creating iVar values for each attribute that was provided
       #
       # @return [TestingRecord::Model]
       def create(attributes = self.attributes)
         new(attributes).tap do |entity|
-          attributes.each do |attribute|
-            default_value = attribute[:type] == :singular ? '' : []
-            entity.instance_variable_set("@#{attribute[:name]}", default_value)
+          attributes.each do |attribute_key, attribute_value|
+            entity.instance_variable_set("@#{attribute_key}", attribute_value)
           end
           add_to_cache(entity) if respond_to?(cache_name)
         end

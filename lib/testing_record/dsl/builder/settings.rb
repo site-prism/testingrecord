@@ -21,28 +21,17 @@ module TestingRecord
           define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
         end
 
-        # Sets an attribute on the model, this should have a name and an optional type (Defaults to `:singular`)
+        # Sets an attribute on the model
         #
-        # @return [Array<Hash>]
-        def attribute(name, type: :singular)
-          raise Error, 'Invalid type option, must be :singular or :plural if specified' unless type_valid?(type)
-
+        # @return [Array<Symbol>]
+        def attribute(name)
           attr_reader name
 
-          attributes << { name:, type: }
+          attributes << name
         end
 
         def attributes
           @attributes ||= []
-        end
-
-        # Set the type of model, this should be one of `:singular` or `:plural`
-        #
-        # @return [Symbol]
-        def type(option)
-          raise Error, 'Invalid type option, must be :singular or :plural' unless type_valid?(option)
-
-          @type = option
         end
 
         private

@@ -6,8 +6,8 @@ RSpec.describe TestingRecord::Model do
 
     let(:refined_class) do
       Class.new(described_class) do
-        attribute :bar, type: :singular
-        attribute :baz, type: :plural
+        attribute :bar
+        attribute :baz
         attribute :bay
       end
     end
@@ -58,16 +58,8 @@ RSpec.describe TestingRecord::Model do
       end
     end
 
-    it 'stores the default value of singular attributes as an empty string' do
-      expect(instance.bar).to eq('')
-    end
-
-    it 'stores the default value of plural attributes as an empty array' do
-      expect(instance.baz).to eq([])
-    end
-
-    it 'stores the default value of attributes as an empty string (singular default)' do
-      expect(instance.bay).to eq('')
+    it 'does not store a default value of for attributes' do
+      expect(instance.bar).to be_nil
     end
   end
 end
