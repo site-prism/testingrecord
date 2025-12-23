@@ -18,11 +18,11 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
     end
 
     it 'generates a new reader class method for accessing the raw data' do
-      expect(SettingsTest).to respond_to(:settings_tests)
+      expect(SettingsTest).to respond_to(:all)
     end
 
     it 'automatically creates the cache as an empty array' do
-      expect(SettingsTest.settings_tests).to eq([])
+      expect(SettingsTest.all).to eq([])
     end
   end
 

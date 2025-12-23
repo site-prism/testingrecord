@@ -38,7 +38,7 @@ module TestingRecord
 
         def add_to_cache(entity)
           self.current = entity
-          self.all << entity
+          all << entity
           # TODO: Add log message (Requires adding logger)
         end
       end

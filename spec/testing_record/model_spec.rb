@@ -23,7 +23,7 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'adds the entity to the cache' do
-        expect { SettingsTest.create }.to change(SettingsTest.settings_tests, :length).by(1)
+        expect { SettingsTest.create }.to change(SettingsTest.all, :length).by(1)
       end
 
       it 'updates the `.current` status to the newly created entity' do
@@ -44,7 +44,7 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'does not generate a cache add the entity to the cache' do
-        expect(SettingsTest).not_to respond_to(:SettingsTests)
+        expect(SettingsTest).not_to respond_to(:all)
       end
     end
 
