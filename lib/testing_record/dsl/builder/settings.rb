@@ -17,8 +17,8 @@ module TestingRecord
           raise Error, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
           return unless option == :enabled
 
-          instance_variable_set(ivar_name, [])
-          define_singleton_method(cache_name) { instance_variable_get(ivar_name) }
+          instance_variable_set(:@all, [])
+          define_singleton_method(:all) { instance_variable_get(:@all) }
         end
 
         # Sets an attribute on the model
@@ -38,16 +38,8 @@ module TestingRecord
 
         def add_to_cache(entity)
           self.current = entity
-          send(cache_name) << entity
+          self.all << entity
           # TODO: Add log message (Requires adding logger)
-        end
-
-        def cache_name
-          :"#{to_s.snake_case}s"
-        end
-
-        def ivar_name
-          "@#{to_s.snake_case}s"
         end
       end
     end
