@@ -1,4 +1,8 @@
 ## [Unreleased]
+### Changed
+- **Breaking change**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
+
+## [0.4.1] - 2025-12-22
 ### Fixed
 - Removed the `type` config as this was broken, across both model and attribute
 - Properly determine the presence helper value based on the outputted value not the type inferred
