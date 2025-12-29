@@ -1,4 +1,7 @@
 ## [Unreleased]
+### Added
+- Added humanized form of `#inspect` and `#to_s` for better readability when outputting model instances
+
 ### Changed
 - **Breaking change**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
 
