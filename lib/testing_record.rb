@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'testing_record/dsl'
+require_relative 'testing_record/logger'
 require_relative 'testing_record/model'
 require_relative 'testing_record/version'
 
