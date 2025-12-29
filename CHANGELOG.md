@@ -40,8 +40,9 @@
 ### Added
 - Initial gem creation
 
-[Unreleased]: https://github.com/site-prism/testingrecord/compare/v0.4...HEAD
-[0.4]:        https://github.com/site-prism/testingrecord/compare/v0.3...v0.4
-[0.3]:        https://github.com/site-prism/testingrecord/compare/0.2...v0.3
-[0.2]:        https://github.com/site-prism/testingrecord/compare/0.1...v0.2
-[0.1]:        https://github.com/site-prism/testingrecord/commit/3777aec
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.4.1...HEAD
+[0.4.1]:        https://github.com/site-prism/testingrecord/compare/v0.4...v0.4.1
+[0.4]:          https://github.com/site-prism/testingrecord/compare/v0.3...v0.4
+[0.3]:          https://github.com/site-prism/testingrecord/compare/0.2...v0.3
+[0.2]:          https://github.com/site-prism/testingrecord/compare/0.1...v0.2
+[0.1]:          https://github.com/site-prism/testingrecord/commit/3777aec
