@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::Model do
+  subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
+
   let(:refined_class) do
     Class.new(described_class) do
       attribute :bar
@@ -8,14 +10,12 @@ RSpec.describe TestingRecord::Model do
       attribute :bay
 
       def self.name
-        'TestingRecord::Model::Anonymous'
+        'Namespace::AnonymousModel'
       end
     end
   end
 
   describe '.create' do
-    subject(:instance) { refined_class.create }
-
     context 'with caching enabled' do
       before do
         stub_const('SettingsTest', Class.new(described_class))
@@ -63,21 +63,17 @@ RSpec.describe TestingRecord::Model do
     end
 
     it 'does not store a default value of for attributes' do
-      expect(instance.bar).to be_nil
+      expect(instance.bay).to be_nil
     end
   end
 
   describe '#inspect' do
-    subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
-
     it 'returns a string representation of the model with its attributes' do
-      expect(instance.inspect).to eq('#<TestingRecord::Model::Anonymous @bar="value1", @baz=42>')
+      expect(instance.inspect).to eq('#<Namespace::AnonymousModel @bar="value1", @baz=42>')
     end
   end
 
   describe '#to_s' do
-    subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
-
     it 'returns the same string as #inspect' do
       expect(instance.to_s).to eq(instance.inspect)
     end
