@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::Model do
-  describe '.create' do
-    subject(:instance) { refined_class.create }
+  let(:refined_class) do
+    Class.new(described_class) do
+      attribute :bar
+      attribute :baz
+      attribute :bay
 
-    let(:refined_class) do
-      Class.new(described_class) do
-        attribute :bar
-        attribute :baz
-        attribute :bay
+      def self.name
+        'TestingRecord::Model::Anonymous'
       end
     end
+  end
+
+  describe '.create' do
+    subject(:instance) { refined_class.create }
 
     context 'with caching enabled' do
       before do
@@ -64,31 +68,15 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '#inspect' do
-    subject(:instance) { refined_class.create(bar: 'value1', baz: 42) }
-
-    let(:refined_class) do
-      Class.new(described_class) do
-        attribute :bar
-        attribute :baz
-        attribute :bay
-      end
-    end
+    subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
 
     it 'returns a string representation of the model with its attributes' do
-      expect(instance.inspect).to eq('#<TestingRecord::Model::Anonymous @bar="value1", @baz=42, @bay=nil>')
+      expect(instance.inspect).to eq('#<TestingRecord::Model::Anonymous @bar="value1", @baz=42>')
     end
   end
 
   describe '#to_s' do
-    subject(:instance) { refined_class.create(bar: 'value1', baz: 42) }
-
-    let(:refined_class) do
-      Class.new(described_class) do
-        attribute :bar
-        attribute :baz
-        attribute :bay
-      end
-    end
+    subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
 
     it 'returns the same string as #inspect' do
       expect(instance.to_s).to eq(instance.inspect)
