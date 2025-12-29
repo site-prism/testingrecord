@@ -62,4 +62,36 @@ RSpec.describe TestingRecord::Model do
       expect(instance.bar).to be_nil
     end
   end
+
+  describe '#inspect' do
+    subject(:instance) { refined_class.create(bar: 'value1', baz: 42) }
+
+    let(:refined_class) do
+      Class.new(described_class) do
+        attribute :bar
+        attribute :baz
+        attribute :bay
+      end
+    end
+
+    it 'returns a string representation of the model with its attributes' do
+      expect(instance.inspect).to eq('#<TestingRecord::Model::Anonymous @bar="value1", @baz=42, @bay=nil>')
+    end
+  end
+
+  describe '#to_s' do
+    subject(:instance) { refined_class.create(bar: 'value1', baz: 42) }
+
+    let(:refined_class) do
+      Class.new(described_class) do
+        attribute :bar
+        attribute :baz
+        attribute :bay
+      end
+    end
+
+    it 'returns the same string as #inspect' do
+      expect(instance.to_s).to eq(instance.inspect)
+    end
+  end
 end

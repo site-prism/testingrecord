@@ -34,5 +34,13 @@ module TestingRecord
     def initialize(attributes = {})
       @attributes = attributes
     end
+
+    def inspect
+      "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
+    end
+
+    def to_s
+      inspect
+    end
   end
 end
