@@ -1,17 +1,21 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::Model do
-  describe '.create' do
-    subject(:instance) { refined_class.create }
+  subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
 
-    let(:refined_class) do
-      Class.new(described_class) do
-        attribute :bar
-        attribute :baz
-        attribute :bay
+  let(:refined_class) do
+    Class.new(described_class) do
+      attribute :bar
+      attribute :baz
+      attribute :bay
+
+      def self.name
+        'Namespace::AnonymousModel'
       end
     end
+  end
 
+  describe '.create' do
     context 'with caching enabled' do
       before do
         stub_const('SettingsTest', Class.new(described_class))
@@ -59,7 +63,35 @@ RSpec.describe TestingRecord::Model do
     end
 
     it 'does not store a default value of for attributes' do
-      expect(instance.bar).to be_nil
+      expect(instance.bay).to be_nil
+    end
+  end
+
+  describe '#inspect' do
+    it 'returns a string representation of the model with its attributes' do
+      expect(instance.inspect).to eq('#<Namespace::AnonymousModel @bar="value1", @baz=42>')
+    end
+  end
+
+  describe '#to_s' do
+    it 'returns the same string as #inspect' do
+      expect(instance.to_s).to eq(instance.inspect)
+    end
+  end
+
+  describe '#update' do
+    subject(:instance) { described_class.create({ bar: 'initial', baz: 'initial' }) }
+
+    it 'updates the attribute values on the instance' do
+      instance.update({ bar: 'updated' })
+
+      expect(instance.bar).to eq('updated')
+    end
+
+    it 'updates the attributes hash accordingly' do
+      instance.update({ baz: 'bazzy' })
+
+      expect(instance.attributes[:baz]).to eq('bazzy')
     end
   end
 end

@@ -1,4 +1,15 @@
 ## [Unreleased]
+### Added
+- Added humanized form of `#inspect` and `#to_s` for better readability when outputting model instances
+- Added internal logger
+- Added `#update` method to all models to update attributes post-creation
+- Created ability to filter model entities
+  - Simple filters have been added that leans on a private `.find_by` -> returning entities that matches the criteria
+    - `.exists?` -> An entity exists that matches the criteria
+    - `.with_email` -> Returns all entities with the email address specified
+- Added ability to provide the primary key for a model via `.primary_key` class method
+  - This will be used in the future for deduplication logic
+
 ### Changed
 - **Breaking change**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
 
@@ -37,8 +48,9 @@
 ### Added
 - Initial gem creation
 
-[Unreleased]: https://github.com/site-prism/testingrecord/compare/v0.4...HEAD
-[0.4]:        https://github.com/site-prism/testingrecord/compare/v0.3...v0.4
-[0.3]:        https://github.com/site-prism/testingrecord/compare/0.2...v0.3
-[0.2]:        https://github.com/site-prism/testingrecord/compare/0.1...v0.2
-[0.1]:        https://github.com/site-prism/testingrecord/commit/3777aec
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.4.1...HEAD
+[0.4.1]:        https://github.com/site-prism/testingrecord/compare/v0.4...v0.4.1
+[0.4]:          https://github.com/site-prism/testingrecord/compare/v0.3...v0.4
+[0.3]:          https://github.com/site-prism/testingrecord/compare/0.2...v0.3
+[0.2]:          https://github.com/site-prism/testingrecord/compare/0.1...v0.2
+[0.1]:          https://github.com/site-prism/testingrecord/commit/3777aec

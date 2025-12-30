@@ -7,6 +7,7 @@ module TestingRecord
   # The top level Model. Most of the behaviours specified here are fairly rudimentary ones that will then
   # include other behaviour(s), from the included modules
   class Model
+    extend DSL::Builder::Filters
     extend DSL::Builder::Helpers
     extend DSL::Builder::Settings
 
@@ -33,6 +34,23 @@ module TestingRecord
 
     def initialize(attributes = {})
       @attributes = attributes
+    end
+
+    def inspect
+      "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
+    end
+
+    def to_s
+      inspect
+    end
+
+    def update(attrs)
+      attrs.each do |key, value|
+        # TODO: Once logger is implemented this needs modifying to output a log message
+        # AutomationLogger.debug("Updating '#{key}' on current User to be '#{value}'")
+        attributes[key] = value
+        instance_variable_set("@#{key}", value)
+      end
     end
   end
 end
