@@ -18,7 +18,7 @@ module TestingRecord
         #
         # @return [TestingRecord::Model, nil]
         def with_email(email_address)
-          find_by({ email_address: })&.tap { |entity| self.class.current = entity }
+          find_by({ email_address: })&.tap { |entity| entity.class.current = entity }
         end
 
         private
