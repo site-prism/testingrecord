@@ -3,6 +3,10 @@
 - Added humanized form of `#inspect` and `#to_s` for better readability when outputting model instances
 - Added internal logger
 - Added `#update` method to all models to update attributes post-creation
+- Created ability to filter model entities
+  - Simple filters have been added that leans on a private `.find_by` -> returning entities that matches the criteria
+    - `.exists?` -> An entity exists that matches the criteria
+    - `.with_email` -> Returns all entities with the email address specified
 
 ### Changed
 - **Breaking change**: Renamed the cache to `:all` and the iVar` to `@all` for clarity

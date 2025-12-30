@@ -18,14 +18,14 @@ module TestingRecord
         #
         # @return [TestingRecord::Model, nil]
         def with_email(email_address)
-          find_by({ email_address: })&.tap { |entity| entity.class.current = entity }
+          find_by({ email_address: })&.first&.tap { |entity| entity.class.current = entity }
         end
 
         private
 
-        # Finds an entity by matching attribute values
+        # Finds all entities that match specified attribute values
         #
-        # @return [TestingRecord::Model, nil]
+        # @return [Array<TestingRecord::Model>]
         def find_by(attributes)
           pool = all
           attributes.each do |key, value|
@@ -34,7 +34,7 @@ module TestingRecord
             # AutomationLogger.debug("Filtering User list by #{key}: #{value}")
             pool = pool.select { |entity| entity.attributes[key] == value }
           end
-          pool.first
+          pool
         end
       end
     end
