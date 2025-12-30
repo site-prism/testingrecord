@@ -50,6 +50,10 @@ module TestingRecord
           all << entity
           # TODO: Add log message (Requires adding logger)
         end
+
+        def update_cache(entity)
+          # TODO: This needs implementing properly
+        end
       end
     end
   end
