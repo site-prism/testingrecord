@@ -10,17 +10,6 @@ module TestingRecord
       module Settings
         include DSL::Validation::Input
 
-        # Create a cache of the entities, named according to the classname
-        #
-        # @return [Symbol]
-        def caching(option)
-          raise Error, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
-          return unless option == :enabled
-
-          instance_variable_set(:@all, [])
-          define_singleton_method(:all) { instance_variable_get(:@all) }
-        end
-
         # Sets an attribute on the model
         #
         # @return [Array<Symbol>]
@@ -32,6 +21,26 @@ module TestingRecord
 
         def attributes
           @attributes ||= []
+        end
+
+        # Create a cache of the entities, named according to the classname
+        #
+        # @return [Symbol]
+        def caching(option)
+          raise Error, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
+          return unless option == :enabled
+
+          instance_variable_set(:@all, [])
+          define_singleton_method(:all) { instance_variable_get(:@all) }
+        end
+
+        # Sets the primary key value of all entities - used for deduplication
+        # TODO: Use this for deduplication proper
+        #
+        # @return [Symbol]
+        def primary_key(option)
+          instance_variable_set(:@__primary_key, option.to_sym)
+          define_singleton_method(:__primary_key) { instance_variable_get(:@__primary_key) }
         end
 
         private
