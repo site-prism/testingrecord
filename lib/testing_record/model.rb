@@ -35,6 +35,15 @@ module TestingRecord
       @attributes = attributes
     end
 
+    def update(attrs)
+      attrs.each do |key, value|
+        # TODO: Once logger is implemented this needs modifying to output a log message
+        # AutomationLogger.debug("Updating '#{key}' on current User to be '#{value}'")
+        attributes[key] = value
+        instance_variable_set("@#{key}", value)
+      end
+    end
+
     def inspect
       "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
     end
