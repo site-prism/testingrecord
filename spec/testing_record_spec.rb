@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+
 describe TestingRecord do
   # Stop the $stdout process leaking cross-tests
   before { wipe_logger! }
