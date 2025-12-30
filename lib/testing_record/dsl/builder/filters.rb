@@ -10,7 +10,7 @@ module TestingRecord
         #
         # @return [Boolean]
         def exists?(attributes)
-          !find_by(attributes).nil?
+          find_by(attributes).any?
         end
 
         # Finds an entity with the provided email address

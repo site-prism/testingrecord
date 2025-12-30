@@ -10,7 +10,7 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   describe '.exists?' do
     context 'when entity does not exist' do
       it 'is `false`' do
-        expect(model_klazz.exists?(email_address: 'foo@bar.com')).to be false
+        expect(model_klazz.exists?({ email_address: 'foo@bar.com' })).to be false
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
       end
 
       it 'is `true`' do
-        expect(model_klazz.exists?(email_address: 'foo@bar.com')).to be true
+        expect(model_klazz.exists?({ email_address: 'foo@bar.com' })).to be true
       end
     end
   end
