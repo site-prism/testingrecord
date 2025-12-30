@@ -7,6 +7,8 @@
   - Simple filters have been added that leans on a private `.find_by` -> returning entities that matches the criteria
     - `.exists?` -> An entity exists that matches the criteria
     - `.with_email` -> Returns all entities with the email address specified
+- Added ability to provide the primary key for a model via `.primary_key` class method
+  - This will be used in the future for deduplication logic
 
 ### Changed
 - **Breaking change**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
