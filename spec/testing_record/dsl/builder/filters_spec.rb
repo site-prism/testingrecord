@@ -1,55 +1,46 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::DSL::Builder::Filters do
-  subject(:filter_klazz) do
-    Class.new do
-      extend TestingRecord::DSL::Builder::Filters
+  subject(:model_klazz) do
+    Class.new(TestingRecord::Model) do
+      caching :enabled
     end
   end
 
-  let(:models) { [model.new, model.new] }
-  let(:model) { Class.new(TestingRecord::Model) }
-
   describe '.exists?' do
     context 'when entity does not exist' do
-      before do
-        allow(filter_klazz).to receive(:find_by).and_return(nil)
-      end
-
       it 'is `false`' do
-        expect(filter_klazz.exists?(name: 'Test')).to be false
+        expect(model_klazz.exists?(email_address: 'foo@bar.com')).to be false
       end
     end
 
     context 'when entity exists' do
       before do
-        allow(filter_klazz).to receive(:find_by).and_return(models)
+        model_klazz.create({ email_address: 'foo@bar.com' })
+        model_klazz.create({ email_address: 'baz@bar.com' })
       end
 
       it 'is `true`' do
-        expect(filter_klazz.exists?(name: 'Test')).to be true
+        expect(model_klazz.exists?(email_address: 'foo@bar.com')).to be true
       end
     end
   end
 
   describe '.with_email' do
     context 'when entity does not exist' do
-      before do
-        allow(filter_klazz).to receive(:find_by).and_return(nil)
-      end
-
       it 'does not find a model' do
-        expect(model_klazz.with_email('foo@bar.com')).to eq(1)
+        expect(model_klazz.with_email('foo@bar.com')).to be_nil
       end
     end
 
     context 'when entity exists' do
       before do
-        allow(filter_klazz).to receive(:find_by).and_return(models)
+        model_klazz.create({ email_address: 'foo@bar.com' })
+        model_klazz.create({ email_address: 'baz@bar.com' })
       end
 
       it 'finds the first matching model' do
-        expect(model_klazz.with_email('foo@bar.com')).to eq(1)
+        expect(model_klazz.with_email('foo@bar.com')).to be_a TestingRecord::Model
       end
     end
   end
