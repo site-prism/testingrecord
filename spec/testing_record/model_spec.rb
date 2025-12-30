@@ -67,7 +67,7 @@ RSpec.describe TestingRecord::Model do
     subject(:instance) { described_class.create({ bar: 'initial', baz: 'initial' }) }
 
     it 'updates the attribute values on the instance' do
-      instance.update({ bar: 'updated' } )
+      instance.update({ bar: 'updated' })
 
       expect(instance.bar).to eq('updated')
     end
