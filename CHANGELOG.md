@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [0.5] - 2025-12-30
 ### Added
 - Added humanized form of `#inspect` and `#to_s` for better readability when outputting model instances
 - Added internal logger
@@ -48,7 +50,8 @@
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.4.1...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.5...HEAD
+[0.5]:          https://github.com/site-prism/testingrecord/compare/v0.4.1...v0.5
 [0.4.1]:        https://github.com/site-prism/testingrecord/compare/v0.4...v0.4.1
 [0.4]:          https://github.com/site-prism/testingrecord/compare/v0.3...v0.4
 [0.3]:          https://github.com/site-prism/testingrecord/compare/0.2...v0.3
