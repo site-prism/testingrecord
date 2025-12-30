@@ -35,6 +35,14 @@ module TestingRecord
       @attributes = attributes
     end
 
+    def inspect
+      "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
+    end
+
+    def to_s
+      inspect
+    end
+
     def update(attrs)
       attrs.each do |key, value|
         # TODO: Once logger is implemented this needs modifying to output a log message
@@ -42,14 +50,6 @@ module TestingRecord
         attributes[key] = value
         instance_variable_set("@#{key}", value)
       end
-    end
-
-    def inspect
-      "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
-    end
-
-    def to_s
-      inspect
     end
   end
 end
