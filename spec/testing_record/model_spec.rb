@@ -22,7 +22,7 @@ RSpec.describe TestingRecord::Model do
         FakeModel.caching :enabled
       end
 
-      it 'generates a new instance of the model entity' do
+      it 'generates a new instance of the entity' do
         expect(FakeModel.create).to be_a FakeModel
       end
 
@@ -43,22 +43,8 @@ RSpec.describe TestingRecord::Model do
         FakeModel.caching :disabled
       end
 
-      it 'generates a new instance of the model entity' do
+      it 'generates a new instance of the entity' do
         expect(FakeModel.create).to be_a FakeModel
-      end
-
-      it 'does not generate a cache add the entity to the cache' do
-        expect(FakeModel).not_to respond_to(:all)
-      end
-    end
-
-    context 'with an invalid caching setting' do
-      before do
-        stub_const('FakeModel', Class.new(described_class))
-      end
-
-      it 'cannot be configured on the model' do
-        expect { FakeModel.caching :invalid }.to raise_error(TestingRecord::Error)
       end
     end
 

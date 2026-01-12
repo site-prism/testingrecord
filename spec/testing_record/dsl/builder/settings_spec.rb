@@ -42,17 +42,36 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
   end
 
   describe '.caching' do
-    before do
-      stub_const('FakeModel', Class.new(klazz))
-      FakeModel.caching :enabled
+    context 'when enabling caching' do
+      before do
+        stub_const('FakeModel', Class.new(klazz))
+        FakeModel.caching :enabled
+      end
+
+      it 'automatically creates the cache as an empty array' do
+        expect(FakeModel.all).to eq([])
+      end
     end
 
-    it 'generates a new reader class method for accessing the raw data' do
-      expect(FakeModel).to respond_to(:all)
+    context 'without caching enabled' do
+      before do
+        stub_const('FakeModel', Class.new(klazz))
+        FakeModel.caching :disabled
+      end
+
+      it 'does not generate a cache' do
+        expect(FakeModel).not_to respond_to(:all)
+      end
     end
 
-    it 'automatically creates the cache as an empty array' do
-      expect(FakeModel.all).to eq([])
+    context 'with an invalid caching setting' do
+      before do
+        stub_const('FakeModel', Class.new(klazz))
+      end
+
+      it 'cannot be configured on the model' do
+        expect { FakeModel.caching :invalid }.to raise_error(TestingRecord::Error)
+      end
     end
   end
 
