@@ -44,4 +44,42 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
       end
     end
   end
+
+  describe '.with_id' do
+    context 'when entity does not exist' do
+      it 'does not find a model' do
+        expect(model_klazz.with_id(1)).to be_nil
+      end
+    end
+
+    context 'when entity exists' do
+      before do
+        model_klazz.create({ id: 1 })
+        model_klazz.create({ id: 2 })
+      end
+
+      it 'finds the first matching model' do
+        expect(model_klazz.with_id(1)).to be_a TestingRecord::Model
+      end
+    end
+  end
+
+  describe '.with_id?' do
+    context 'when entity does not exist' do
+      it 'is `false`' do
+        expect(model_klazz.with_id?(1)).to be false
+      end
+    end
+
+    context 'when entity exists' do
+      before do
+        model_klazz.create({ id: 1 })
+        model_klazz.create({ id: 2 })
+      end
+
+      it 'is `true`' do
+        expect(model_klazz.with_id?(1)).to be true
+      end
+    end
+  end
 end
