@@ -54,10 +54,8 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '.delete' do
-    let(:model1_entity1) { FakeModel.create({ id: 1 }) }
-    let(:model1_entity2) { FakeModel.create({ id: 2 }) }
-    let(:model2_entity1) { FakeOtherModel.create({ id: 1 }) }
-    let(:model2_entity2) { FakeOtherModel.create({ id: 2 }) }
+    let(:primary_model_entity) { FakeModel.create({ id: 1 }) }
+    let(:secondary_model_entity) { FakeOtherModel.create({ id: 1 }) }
 
     before do
       stub_const('FakeModel', Class.new(described_class))
@@ -68,32 +66,27 @@ RSpec.describe TestingRecord::Model do
       before do
         FakeModel.caching :enabled
         FakeOtherModel.caching :enabled
-        model1_entity1
-        model1_entity2
-        model2_entity1
-        model2_entity2
+        primary_model_entity
+        secondary_model_entity
       end
 
       it 'deletes an entity that is present in the cache' do
-        expect { FakeModel.delete(model1_entity1) }.to change(FakeModel.all, :length).by(-1)
+        expect { FakeModel.delete(primary_model_entity) }.to change(FakeModel.all, :length).by(-1)
       end
 
       it 'does not delete entities that are not present in the cache' do
-        expect { FakeModel.delete(model2_entity1) }.not_to change(FakeModel.all, :length)
+        expect { FakeModel.delete(secondary_model_entity) }.not_to change(FakeModel.all, :length)
       end
     end
 
     context 'without caching enabled' do
       before do
         FakeModel.caching :disabled
-        model1_entity1
-        model1_entity2
-        model2_entity1
-        model2_entity2
+        primary_model_entity
       end
 
       it 'does nothing' do
-        expect(FakeModel.delete(model1_entity1)).to be_nil
+        expect(FakeModel.delete(primary_model_entity)).to be_nil
       end
     end
   end
