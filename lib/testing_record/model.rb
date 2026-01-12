@@ -37,6 +37,7 @@ module TestingRecord
     end
 
     def inspect
+      reorder_attributes_for_inspect!
       "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
     end
 
@@ -50,6 +51,16 @@ module TestingRecord
         instance_variable_set("@#{key}", value)
         TestingRecord.logger.info("Updated '#{key}' on current #{self.class} entity to be '#{value}'")
       end
+    end
+
+    private
+
+    def reorder_attributes_for_inspect!
+      return unless self.class.__primary_key
+      return if attributes.keys.first == self.class.__primary_key
+
+      pk_value = attributes.delete(self.class.__primary_key)
+      @attributes = { self.class.__primary_key => pk_value }.merge(attributes)
     end
   end
 end

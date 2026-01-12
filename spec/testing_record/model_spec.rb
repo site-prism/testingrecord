@@ -71,6 +71,11 @@ RSpec.describe TestingRecord::Model do
     it 'returns a string representation of the model with its attributes' do
       expect(instance.inspect).to eq('#<Namespace::AnonymousModel @bar="value1", @baz=42>')
     end
+
+    it 'will show the primary attribute first if defined' do
+      refined_class.primary_key :baz
+      expect(instance.inspect).to eq('#<Namespace::AnonymousModel @baz=42, @bar="value1">')
+    end
   end
 
   describe '#to_s' do
