@@ -43,16 +43,16 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
 
   describe '.caching' do
     before do
-      stub_const('SettingsTest', Class.new(klazz))
-      SettingsTest.caching :enabled
+      stub_const('FakeModel', Class.new(klazz))
+      FakeModel.caching :enabled
     end
 
     it 'generates a new reader class method for accessing the raw data' do
-      expect(SettingsTest).to respond_to(:all)
+      expect(FakeModel).to respond_to(:all)
     end
 
     it 'automatically creates the cache as an empty array' do
-      expect(SettingsTest.all).to eq([])
+      expect(FakeModel.all).to eq([])
     end
   end
 
