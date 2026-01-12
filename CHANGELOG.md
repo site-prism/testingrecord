@@ -5,7 +5,7 @@
   - `.with_id` -> Returns the entity with the id specified
 
 ### Changed
-- The primary key (If defined), will re-order attributes and their inspected values to show first
+- The primary key (if defined), re-orders attributes and their inspected values to show the primary id attribute first
 
 ## [0.5] - 2025-12-30
 ### Added
