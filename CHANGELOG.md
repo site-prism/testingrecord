@@ -1,4 +1,10 @@
 ## [Unreleased]
+### Added
+- Added ability to filter model on `id` attribute
+  - `.with_id?` -> An entity exists that with the id specified
+  - `.with_id` -> Returns the entity with the id specified
+
+### Changed
 
 ## [0.5] - 2025-12-30
 ### Added
@@ -8,7 +14,7 @@
 - Created ability to filter model entities
   - Simple filters have been added that leans on a private `.find_by` -> returning entities that matches the criteria
     - `.exists?` -> An entity exists that matches the criteria
-    - `.with_email` -> Returns all entities with the email address specified
+    - `.with_email` -> Returns the entity with the email address specified
 - Added ability to provide the primary key for a model via `.primary_key` class method
   - This will be used in the future for deduplication logic
 
