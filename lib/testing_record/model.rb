@@ -17,8 +17,8 @@ module TestingRecord
       attr_accessor :current
 
       # Creates an instance of the model
-      #   -> Adding it to the cache if caching is enabled
       #   -> Creating iVar values for each attribute that was provided
+      #   -> Adding it to the cache if caching is enabled
       #
       # @return [TestingRecord::Model]
       def create(attributes = self.attributes)
@@ -29,6 +29,13 @@ module TestingRecord
           end
           add_to_cache(entity) if respond_to?(:all)
         end
+      end
+
+      # Deletes the instance of the model from the cache (Does nothing if caching is disabled)
+      #
+      # @return [TestingRecord::Model]
+      def delete(entity)
+        all.delete(entity) if respond_to?(:all)
       end
     end
 
