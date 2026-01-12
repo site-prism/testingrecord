@@ -10,6 +10,8 @@ module TestingRecord
       module Settings
         include DSL::Validation::Input
 
+        attr_reader :__primary_key
+
         # Sets an attribute on the model
         #
         # @return [Array<Symbol>]
@@ -40,7 +42,6 @@ module TestingRecord
         # @return [Symbol]
         def primary_key(option)
           instance_variable_set(:@__primary_key, option.to_sym)
-          define_singleton_method(:__primary_key) { instance_variable_get(:@__primary_key) }
         end
 
         private

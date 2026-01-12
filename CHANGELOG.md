@@ -6,6 +6,7 @@
 - Added ability to delete models where caching is enabled
 
 ### Changed
+- The primary key (if defined), re-orders attributes and their inspected values to show the primary id attribute first
 
 ## [0.5] - 2025-12-30
 ### Added
