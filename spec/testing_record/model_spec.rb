@@ -53,6 +53,51 @@ RSpec.describe TestingRecord::Model do
     end
   end
 
+  describe '.delete' do
+    let(:model1_entity1) { FakeModel.create({ id: 1 }) }
+    let(:model1_entity2) { FakeModel.create({ id: 2 }) }
+    let(:model2_entity1) { FakeOtherModel.create({ id: 1 }) }
+    let(:model2_entity2) { FakeOtherModel.create({ id: 2 }) }
+
+    before do
+      stub_const('FakeModel', Class.new(described_class))
+      stub_const('FakeOtherModel', Class.new(described_class))
+    end
+
+    context 'with caching enabled' do
+      before do
+        FakeModel.caching :enabled
+        FakeOtherModel.caching :enabled
+        model1_entity1
+        model1_entity2
+        model2_entity1
+        model2_entity2
+      end
+
+      it 'deletes an entity that is present in the cache' do
+        expect { FakeModel.delete(model1_entity1) }.to change(FakeModel.all, :length).by(-1)
+      end
+
+      it 'does not delete entities that are not present in the cache' do
+        expect { FakeModel.delete(model2_entity1) }.not_to change(FakeModel.all, :length)
+      end
+    end
+
+    context 'without caching enabled' do
+      before do
+        FakeModel.caching :disabled
+        model1_entity1
+        model1_entity2
+        model2_entity1
+        model2_entity2
+      end
+
+      it 'does nothing' do
+        expect(FakeModel.delete(model1_entity1)).to be_nil
+      end
+    end
+  end
+
   describe '#inspect' do
     it 'returns a string representation of the model with its attributes' do
       expect(instance.inspect).to eq('#<Namespace::AnonymousModel @bar="value1", @baz=42>')
