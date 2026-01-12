@@ -44,9 +44,8 @@ module TestingRecord
         def find_by(attributes)
           pool = all
           attributes.each do |key, value|
-            # TODO: Enable this logging once v0.5 is released with logger support
-            # AutomationLogger.debug("Current user pool size: #{pool.length}")
-            # AutomationLogger.debug("Filtering User list by #{key}: #{value}")
+            TestingRecord.logger.debug("Current user pool size: #{pool.length}")
+            TestingRecord.logger.debug("Filtering User list by #{key}: #{value}")
             pool = pool.select { |entity| entity.attributes[key] == value }
           end
           pool

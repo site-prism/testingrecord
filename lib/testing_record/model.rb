@@ -46,10 +46,9 @@ module TestingRecord
 
     def update(attrs)
       attrs.each do |key, value|
-        # TODO: Once logger is implemented this needs modifying to output a log message
-        # AutomationLogger.debug("Updating '#{key}' on current User to be '#{value}'")
         attributes[key] = value
         instance_variable_set("@#{key}", value)
+        TestingRecord.logger.info("Updated '#{key}' on current #{self.class} entity to be '#{value}'")
       end
     end
   end
