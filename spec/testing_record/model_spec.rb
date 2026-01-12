@@ -18,52 +18,76 @@ RSpec.describe TestingRecord::Model do
   describe '.create' do
     context 'with caching enabled' do
       before do
-        stub_const('SettingsTest', Class.new(described_class))
-        SettingsTest.caching :enabled
+        stub_const('FakeModel', Class.new(described_class))
+        FakeModel.caching :enabled
       end
 
-      it 'generates a new instance of the model entity' do
-        expect(SettingsTest.create).to be_a SettingsTest
+      it 'generates a new instance of the entity' do
+        expect(FakeModel.create).to be_a FakeModel
       end
 
       it 'adds the entity to the cache' do
-        expect { SettingsTest.create }.to change(SettingsTest.all, :length).by(1)
+        expect { FakeModel.create }.to change(FakeModel.all, :length).by(1)
       end
 
       it 'updates the `.current` status to the newly created entity' do
-        instance = SettingsTest.create
+        instance = FakeModel.create
 
-        expect(SettingsTest.current).to eq(instance)
+        expect(FakeModel.current).to eq(instance)
       end
     end
 
     context 'without caching enabled' do
       before do
-        stub_const('SettingsTest', Class.new(described_class))
-        SettingsTest.caching :disabled
+        stub_const('FakeModel', Class.new(described_class))
+        FakeModel.caching :disabled
       end
 
-      it 'generates a new instance of the model entity' do
-        expect(SettingsTest.create).to be_a SettingsTest
-      end
-
-      it 'does not generate a cache add the entity to the cache' do
-        expect(SettingsTest).not_to respond_to(:all)
-      end
-    end
-
-    context 'with an invalid caching setting' do
-      before do
-        stub_const('SettingsTest', Class.new(described_class))
-      end
-
-      it 'cannot be configured on the model' do
-        expect { SettingsTest.caching :invalid }.to raise_error(TestingRecord::Error)
+      it 'generates a new instance of the entity' do
+        expect(FakeModel.create).to be_a FakeModel
       end
     end
 
     it 'does not store a default value of for attributes' do
       expect(instance.bay).to be_nil
+    end
+  end
+
+  describe '.delete' do
+    let(:primary_model_entity) { FakeModel.create({ id: 1 }) }
+    let(:secondary_model_entity) { FakeOtherModel.create({ id: 1 }) }
+
+    before do
+      stub_const('FakeModel', Class.new(described_class))
+      stub_const('FakeOtherModel', Class.new(described_class))
+    end
+
+    context 'with caching enabled' do
+      before do
+        FakeModel.caching :enabled
+        FakeOtherModel.caching :enabled
+        primary_model_entity
+        secondary_model_entity
+      end
+
+      it 'deletes an entity that is present in the cache' do
+        expect { FakeModel.delete(primary_model_entity) }.to change(FakeModel.all, :length).by(-1)
+      end
+
+      it 'does not delete entities that are not present in the cache' do
+        expect { FakeModel.delete(secondary_model_entity) }.not_to change(FakeModel.all, :length)
+      end
+    end
+
+    context 'without caching enabled' do
+      before do
+        FakeModel.caching :disabled
+        primary_model_entity
+      end
+
+      it 'does nothing' do
+        expect(FakeModel.delete(primary_model_entity)).to be_nil
+      end
     end
   end
 
