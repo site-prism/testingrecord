@@ -3,6 +3,7 @@
 - Added ability to filter model on `id` attribute
   - `.with_id?` -> An entity exists that with the id specified
   - `.with_id` -> Returns the entity with the id specified
+- Added ability to delete models where caching is enabled
 
 ### Changed
 
