@@ -58,6 +58,7 @@ module TestingRecord
         instance_variable_set("@#{key}", value)
         TestingRecord.logger.info("Updated '#{key}' on current #{self.class} entity to be '#{value}'")
       end
+      # This is calling a private method on the class, but we want to do this here
       self.class.send(:update_cache, self) if respond_to?(:all)
     end
 
