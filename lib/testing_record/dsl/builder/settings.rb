@@ -44,8 +44,6 @@ module TestingRecord
           instance_variable_set(:@__primary_key, option.to_sym)
         end
 
-
-
         private
 
         def add_to_cache(entity)
@@ -56,7 +54,8 @@ module TestingRecord
 
         def update_cache(entity)
           delete(entity)
-          add_to_cache(entity)
+          all << entity
+          TestingRecord.logger.debug("Entity: #{entity} updated in cache")
         end
       end
     end
