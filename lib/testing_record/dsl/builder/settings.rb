@@ -52,8 +52,8 @@ module TestingRecord
           TestingRecord.logger.debug("Entity: #{entity} added to cache")
         end
 
-        def update_cache(entity)
-          delete(entity)
+        def update_cache(old_entity, entity)
+          delete(old_entity)
           all << entity
           TestingRecord.logger.debug("Entity: #{entity} updated in cache")
         end
