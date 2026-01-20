@@ -53,7 +53,9 @@ module TestingRecord
         end
 
         def update_cache(entity)
-          # TODO: This needs implementing properly
+          delete(entity)
+          all << entity
+          TestingRecord.logger.debug("Entity: #{entity} updated in cache")
         end
       end
     end

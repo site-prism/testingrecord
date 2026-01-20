@@ -4,6 +4,7 @@
   - `.with_id?` -> An entity exists that with the id specified
   - `.with_id` -> Returns the entity with the id specified
 - Added ability to delete models where caching is enabled
+- When updating models, the cache is also updated to reflect the new values
 
 ### Changed
 - The primary key (if defined), re-orders attributes and their inspected values to show the primary id attribute first
