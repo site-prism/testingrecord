@@ -43,14 +43,6 @@ module TestingRecord
         def primary_key(option)
           instance_variable_set(:@__primary_key, option.to_sym)
         end
-
-        private
-
-        def update_cache(old_entity, entity)
-          delete(old_entity)
-          all << entity
-          TestingRecord.logger.debug("Entity: #{entity} updated in cache")
-        end
       end
     end
   end
