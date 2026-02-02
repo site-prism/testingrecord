@@ -46,12 +46,6 @@ module TestingRecord
 
         private
 
-        def add_to_cache(entity)
-          self.current = entity
-          all << entity
-          TestingRecord.logger.debug("Entity: #{entity} added to cache")
-        end
-
         def update_cache(old_entity, entity)
           delete(old_entity)
           all << entity
