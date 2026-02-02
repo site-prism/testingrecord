@@ -69,17 +69,11 @@ module TestingRecord
     #
     # @return [TestingRecord::Model]
     def update(attrs)
-      old_entity = self
       attrs.each do |key, value|
         attributes[key] = value
         instance_variable_set("@#{key}", value)
         TestingRecord.logger.info("Updated '#{key}' on current #{self.class} entity to be '#{value}'")
       end
-
-      return self unless self.class.respond_to?(:all)
-
-      self.class.all << self
-      self.class.delete(old_entity)
       self
     end
 
