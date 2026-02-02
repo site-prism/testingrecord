@@ -43,18 +43,6 @@ module TestingRecord
         def primary_key(option)
           instance_variable_set(:@__primary_key, option.to_sym)
         end
-
-        private
-
-        def add_to_cache(entity)
-          self.current = entity
-          all << entity
-          TestingRecord.logger.debug("Entity: #{entity} added to cache")
-        end
-
-        def update_cache(entity)
-          # TODO: This needs implementing properly
-        end
       end
     end
   end

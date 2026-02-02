@@ -25,9 +25,14 @@ module TestingRecord
         new(attributes).tap do |entity|
           attributes.each do |attribute_key, attribute_value|
             entity.instance_variable_set("@#{attribute_key}", attribute_value)
-            attr_reader attribute_key
+            entity.class.attr_reader attribute_key
           end
-          add_to_cache(entity) if respond_to?(:all)
+
+          break entity unless respond_to?(:all)
+
+          self.current = entity
+          all << entity
+          TestingRecord.logger.debug("Entity: #{entity} added to cache")
         end
       end
 
@@ -43,21 +48,33 @@ module TestingRecord
       @attributes = attributes
     end
 
+    # View the entity in question in a readable format. Displays all iVars and their values (Primary Key first if set)
+    #
+    # @return [String]
     def inspect
       reorder_attributes_for_inspect!
       "#<#{self.class.name} #{attributes.map { |k, v| "@#{k}=#{v.inspect}" }.join(', ')}>"
     end
 
+    # Functionally equivalent to `inspect`
+    #
+    # @return [String]
     def to_s
       inspect
     end
 
+    # Updates an entity (instance), of a model
+    #   -> Updating iVar values for each attribute that was provided
+    #   -> It will **not** create new reader methods for new variables added
+    #
+    # @return [TestingRecord::Model]
     def update(attrs)
       attrs.each do |key, value|
         attributes[key] = value
         instance_variable_set("@#{key}", value)
         TestingRecord.logger.info("Updated '#{key}' on current #{self.class} entity to be '#{value}'")
       end
+      self
     end
 
     private
