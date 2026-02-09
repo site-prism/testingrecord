@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [0.6] - 2026-02-09
 ### Added
 - Added ability to filter model on `id` attribute
   - `.with_id?` -> An entity exists that with the id specified
@@ -59,7 +61,8 @@
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.5...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.6...HEAD
+[0.6]:          https://github.com/site-prism/testingrecord/compare/v0.5...v0.6
 [0.5]:          https://github.com/site-prism/testingrecord/compare/v0.4.1...v0.5
 [0.4.1]:        https://github.com/site-prism/testingrecord/compare/v0.4...v0.4.1
 [0.4]:          https://github.com/site-prism/testingrecord/compare/v0.3...v0.4
