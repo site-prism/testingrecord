@@ -6,16 +6,19 @@ module TestingRecord
       # [TestingRecord::DSL::Builder::Helpers]
       # Ways in which we can build in extra helper methods from building requests
       module Helpers
-        # Method to add all helpers - Should be called last in the DSL invocations in the class definition
-        #
-        # @return [Array]
-        def add_helpers
-          attributes.each do |attribute|
-            add_presence_helper(attribute)
-          end
+        # DSL signature to add all helpers - Should be procedurally called in the class definition
+        def include_helpers
+          @include_helpers = true
         end
 
         private
+
+        # Top level wrapper method that will incrementally add each helper (Currently only one)
+        def add_helpers(attributes)
+          attributes.each_key do |attribute|
+            add_presence_helper(attribute)
+          end
+        end
 
         # Add the boolean helper which will perform a check to determine whether...
         #   For singular / default categorisations, this checks if one has been set over the default empty value

@@ -5,10 +5,6 @@ RSpec.describe TestingRecord::Model do
 
   let(:refined_class) do
     Class.new(described_class) do
-      attribute :bar
-      attribute :baz
-      attribute :bay
-
       def self.name
         'Namespace::AnonymousModel'
       end
@@ -23,15 +19,15 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'generates a new instance of the entity' do
-        expect(FakeModel.create).to be_a FakeModel
+        expect(FakeModel.create(foo: 1)).to be_a FakeModel
       end
 
       it 'adds the entity to the cache' do
-        expect { FakeModel.create }.to change(FakeModel.all, :length).by(1)
+        expect { FakeModel.create(foo: 1) }.to change(FakeModel.all, :length).by(1)
       end
 
       it 'updates the `.current` status to the newly created entity' do
-        instance = FakeModel.create
+        instance = FakeModel.create(foo: 1)
 
         expect(FakeModel.current).to eq(instance)
       end
@@ -44,12 +40,8 @@ RSpec.describe TestingRecord::Model do
       end
 
       it 'generates a new instance of the entity' do
-        expect(FakeModel.create).to be_a FakeModel
+        expect(FakeModel.create(foo: 1)).to be_a FakeModel
       end
-    end
-
-    it 'does not store a default value of for attributes' do
-      expect(instance.bay).to be_nil
     end
   end
 
