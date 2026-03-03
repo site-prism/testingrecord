@@ -1,4 +1,6 @@
 ## [Unreleased]
+### Added
+- Added missing `.log_level` and `.log_level=` methods to the `TestingRecord` module for better logging control
 
 ## [0.6] - 2026-02-09
 ### Added
