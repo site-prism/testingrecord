@@ -1,6 +1,13 @@
 ## [Unreleased]
+### Removed
+- Removed the `attribute` DSL definition. These are no longer needed and helpers can be inferred from attribute composition
+
 ### Added
 - Added missing `.log_level` and `.log_level=` methods to the `TestingRecord` module for better logging control
+
+### Changed
+- Inline with removal of `attribute` to add helpers (Currently just 1), use `include_helpers` in your model definition to
+add all helpers to all attributes on a model
 
 ## [0.6] - 2026-02-09
 ### Added
