@@ -1,5 +1,12 @@
 ## [Unreleased]
 ### Removed
+
+### Added
+
+### Changed
+
+## [0.7] - 2026-03-03
+### Removed
 - Removed the `attribute` DSL definition. These are no longer needed and helpers can be inferred from attribute composition
 
 ### Added
@@ -70,7 +77,8 @@ add all helpers to all attributes on a model
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.6...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.7...HEAD
+[0.7]:          https://github.com/site-prism/testingrecord/compare/v0.6...v0.7
 [0.6]:          https://github.com/site-prism/testingrecord/compare/v0.5...v0.6
 [0.5]:          https://github.com/site-prism/testingrecord/compare/v0.4.1...v0.5
 [0.4.1]:        https://github.com/site-prism/testingrecord/compare/v0.4...v0.4.1
