@@ -42,4 +42,22 @@ describe TestingRecord do
       end
     end
   end
+
+  describe '.log_level=' do
+    it 'can alter the log level' do
+      expect(described_class).to respond_to(:log_level=)
+    end
+  end
+
+  describe '.log_level' do
+    subject { described_class.log_level }
+
+    it { is_expected.to eq(:DEBUG) }
+
+    context 'when changed to `INFO`' do
+      before { described_class.log_level = :INFO }
+
+      it { is_expected.to eq(:INFO) }
+    end
+  end
 end

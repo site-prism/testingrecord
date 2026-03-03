@@ -32,5 +32,23 @@ module TestingRecord
     def log_path=(logdev)
       logger.reopen(logdev)
     end
+
+    # To enable full logging (This uses the Ruby API, so can accept any of a
+    # Symbol / String / Integer as an input
+    #   TestingRecord.log_level = :DEBUG
+    #   TestingRecord.log_level = 'DEBUG'
+    #   TestingRecord.log_level = 0
+    #
+    # To disable all logging
+    #   TestingRecord.log_level = :UNKNOWN
+    def log_level=(value)
+      logger.level = value
+    end
+
+    # To query what level is being logged
+    #   TestingRecord.log_level # => :DEBUG # By default
+    def log_level
+      %i[DEBUG INFO WARN ERROR FATAL UNKNOWN][logger.level]
+    end
   end
 end
