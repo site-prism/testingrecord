@@ -21,7 +21,7 @@ module TestingRecord
       #   -> Adding it to the cache if caching is enabled
       #
       # @return [TestingRecord::Model]
-      def create(attributes = self.attributes)
+      def create(attributes)
         new(attributes).tap do |entity|
           attributes.each do |attribute_key, attribute_value|
             entity.instance_variable_set("@#{attribute_key}", attribute_value)

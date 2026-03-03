@@ -12,18 +12,18 @@ module TestingRecord
 
         attr_reader :__primary_key
 
-        # Sets an attribute on the model
+        # # Sets an attribute on the model
+        # #
+        # # @return [Array<Symbol>]
+        # def attribute(name)
+        #   attr_reader name
         #
-        # @return [Array<Symbol>]
-        def attribute(name)
-          attr_reader name
-
-          attributes << name
-        end
-
-        def attributes
-          @attributes ||= []
-        end
+        #   attributes << name
+        # end
+        #
+        # def attributes
+        #   @attributes ||= []
+        # end
 
         # Create a cache of the entities, named according to the classname
         #

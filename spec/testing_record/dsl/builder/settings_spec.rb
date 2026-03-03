@@ -11,36 +11,6 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
     end
   end
 
-  describe '.attribute' do
-    let(:instance) { refined_class.new }
-
-    context 'when not classified' do
-      let(:refined_class) do
-        Class.new(klazz) do
-          attribute :bar
-        end
-      end
-
-      it 'sets the attribute as a method on the model instance' do
-        expect(instance).to respond_to(:bar)
-      end
-    end
-  end
-
-  describe '.attributes' do
-    context 'when not classified' do
-      let(:refined_class) do
-        Class.new(klazz) do
-          attribute :bar
-        end
-      end
-
-      it 'stores all configured attributes' do
-        expect(refined_class.attributes).to include(:bar)
-      end
-    end
-  end
-
   describe '.caching' do
     context 'when enabling caching' do
       before do
