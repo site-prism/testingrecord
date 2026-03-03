@@ -11,13 +11,14 @@ module TestingRecord
           @include_helpers = true
         end
 
+        private
+
+        # Top level wrapper method that will incrementally add each helper (Currently only one)
         def add_helpers(attributes)
           attributes.each_key do |attribute|
             add_presence_helper(attribute)
           end
         end
-
-        private
 
         # Add the boolean helper which will perform a check to determine whether...
         #   For singular / default categorisations, this checks if one has been set over the default empty value

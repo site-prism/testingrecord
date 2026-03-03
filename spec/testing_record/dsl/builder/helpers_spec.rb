@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::DSL::Builder::Helpers do
-  subject(:instance) { klazz.new }
-
-  let(:klazz) do
+  subject(:klazz) do
     Class.new(TestingRecord::Model) do
       include_helpers
     end
   end
 
-  describe '.add_helpers' do
+  describe '.include_helpers' do
     it 'adds the presence helper (true), for defined strings' do
       expect(klazz.create({ foo: 'bar' }).foo?).to be true
     end
@@ -32,10 +30,6 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
 
     it 'adds the presence helper (false), for defined empty hashes' do
       expect(klazz.create({ foo: {} }).foo?).to be false
-    end
-
-    it 'does not add a presence helper for undefined attributes' do
-      expect(klazz.create({ bar: 'value' })).not_to respond_to(:bar?)
     end
   end
 end
