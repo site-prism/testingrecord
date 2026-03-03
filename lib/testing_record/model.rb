@@ -23,18 +23,9 @@ module TestingRecord
       # @return [TestingRecord::Model]
       def create(attributes)
         new(attributes).tap do |entity|
-          attributes.each do |attribute_key, attribute_value|
-            entity.instance_variable_set("@#{attribute_key}", attribute_value)
-            entity.class.attr_reader attribute_key
-          end
-
+          configure_data(entity, attributes)
           add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
-
-          break entity unless respond_to?(:all)
-
-          self.current = entity
-          all << entity
-          TestingRecord.logger.debug("Entity: #{entity} added to cache")
+          cache_entity(entity)
         end
       end
 
@@ -43,6 +34,23 @@ module TestingRecord
       # @return [TestingRecord::Model]
       def delete(entity)
         all.delete(entity) if respond_to?(:all)
+      end
+
+      private
+
+      def cache_entity(entity)
+        return unless respond_to?(:all)
+
+        self.current = entity
+        all << entity
+        TestingRecord.logger.debug("Entity: #{entity} added to cache")
+      end
+
+      def configure_data(entity, attributes)
+        attributes.each do |attribute_key, attribute_value|
+          entity.instance_variable_set("@#{attribute_key}", attribute_value)
+          entity.class.attr_reader attribute_key
+        end
       end
     end
 
