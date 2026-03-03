@@ -5,7 +5,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
 
   let(:klazz) do
     Class.new(TestingRecord::Model) do
-      add_helpers
+      include_helpers
     end
   end
 

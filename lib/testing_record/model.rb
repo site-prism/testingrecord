@@ -28,6 +28,8 @@ module TestingRecord
             entity.class.attr_reader attribute_key
           end
 
+          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
+
           break entity unless respond_to?(:all)
 
           self.current = entity
