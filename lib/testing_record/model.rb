@@ -19,10 +19,11 @@ module TestingRecord
       # Creates an instance of the model
       #   -> Creating iVar values for each attribute that was provided
       #   -> Adding it to the cache if caching is enabled
+      #   -> Keeping a track of all originally supplied attributes in symbolized format in the `attributes` iVar
       #
       # @return [TestingRecord::Model]
       def create(attributes)
-        new(attributes).tap do |entity|
+        new(attributes.transform_keys(&:to_sym)).tap do |entity|
           configure_data(entity, attributes)
           add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
           cache_entity(entity)
@@ -74,15 +75,15 @@ module TestingRecord
     end
 
     # Updates an entity (instance), of a model
-    #   -> Updating iVar values for each attribute that was provided
+    #   -> Updating iVar values for each attribute that was provided (Converting to symbolized format)
     #   -> It will **not** create new reader methods for new variables added
     #
     # @return [TestingRecord::Model]
     def update(attrs)
-      attrs.each do |key, value|
+      attrs.transform_keys(&:to_sym).each do |key, value|
         attributes[key] = value
         instance_variable_set("@#{key}", value)
-        TestingRecord.logger.info("Updated '#{key}' on current #{self.class} entity to be '#{value}'")
+        TestingRecord.logger.info("Updated '#{key}' on the #{self.class} entity to be '#{value}'")
       end
       self
     end
