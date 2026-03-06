@@ -25,11 +25,11 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob('lib/**/*') + %w[LICENSE README.md]
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'automation_helpers', '> 5', '< 7'
+  spec.add_dependency 'automation_helpers', '> 5', '< 8'
   spec.add_dependency 'logger', '~> 1.7'
 
   spec.add_development_dependency 'rspec', '~> 3.13'
-  spec.add_development_dependency 'rubocop', '~> 1.85.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.25.0'
+  spec.add_development_dependency 'rubocop', '~> 1.85.1'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.26.1'
   spec.add_development_dependency 'rubocop-rspec', '~> 3.9.0'
 end
