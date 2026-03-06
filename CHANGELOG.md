@@ -5,6 +5,7 @@
 
 ### Changed
 - **BREAKING CHANGE**: Ensure all keys passed into `.create` / `#update` are symbols to ensure consistency
+- Permit `automation_helpers` v7
 
 ## [0.7] - 2026-03-03
 ### Removed
