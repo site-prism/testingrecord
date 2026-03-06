@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- **BREAKING CHANGE**: Ensure all keys passed into `.create` / `#update` are symbols to ensure consistency
 
 ## [0.7] - 2026-03-03
 ### Removed
@@ -13,7 +14,7 @@
 - Added missing `.log_level` and `.log_level=` methods to the `TestingRecord` module for better logging control
 
 ### Changed
-- Inline with removal of `attribute` to add helpers (Currently just 1), use `include_helpers` in your model definition to
+- Alongside the removal of `attribute` (Used to add helpers - currently just 1), now use `include_helpers` in your model definition to
 add all helpers to all attributes on a model
 
 ## [0.6] - 2026-02-09
@@ -40,7 +41,7 @@ add all helpers to all attributes on a model
   - This will be used in the future for deduplication logic
 
 ### Changed
-- **Breaking change**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
+- **BREAKING CHANGE**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
 
 ## [0.4.1] - 2025-12-22
 ### Fixed
@@ -55,7 +56,7 @@ add all helpers to all attributes on a model
 - When calling `Model.create` the output is stored as the current entity for the model in question
 
 ### Changed
-- **Breaking change**: Renamed the `property` and `properties` methods to `attribute` and `attributes` respectively
+- **BREAKING CHANGE**: Renamed the `property` and `properties` methods to `attribute` and `attributes` respectively
 - Improved the first "any" helper (Now renamed to presence), to check for more nuanced items
   - For singular / default items, it checks the string is not empty
   - For plural items, it still checks if any are present
