@@ -7,6 +7,8 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
     end
   end
 
+  before { silence_logger! }
+
   describe '.exists?' do
     context 'when entity does not exist' do
       it 'is `false`' do
