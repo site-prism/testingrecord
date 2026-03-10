@@ -25,17 +25,17 @@ RSpec.describe TestingRecord::Model do
       before { FakeModel.caching :enabled }
 
       it 'generates a new instance of the entity' do
-        expect(FakeModel.create(foo: 1)).to be_a FakeModel
+        expect(primary_model_entity).to be_a FakeModel
       end
 
       it 'adds the entity to the cache' do
-        expect { FakeModel.create(foo: 1) }.to change(FakeModel.all, :length).by(1)
+        expect { primary_model_entity }.to change(FakeModel.all, :length).by(1)
       end
 
       it 'updates the `.current` status to the newly created entity' do
-        instance = FakeModel.create(foo: 1)
+        primary_model_entity
 
-        expect(FakeModel.current).to eq(instance)
+        expect(FakeModel.current).to eq(primary_model_entity)
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe TestingRecord::Model do
       before { FakeModel.caching :disabled }
 
       it 'generates a new instance of the entity' do
-        expect(FakeModel.create(foo: 1)).to be_a FakeModel
+        expect(primary_model_entity).to be_a FakeModel
       end
     end
   end
