@@ -11,9 +11,8 @@ RSpec.describe TestingRecord::Model do
   let(:primary_model_entity) { FakeModel.create({ id: 1, foo: :foo, bar: :bar }) }
   let(:secondary_model_entity) { FakeOtherModel.create({ id: 1, foo: :foo, bar: :bar }) }
 
-  before { silence_logger! }
-
   before do
+    silence_logger!
     stub_const('FakeModel', Class.new(described_class))
     stub_const('FakeOtherModel', Class.new(described_class))
   end
