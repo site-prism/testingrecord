@@ -15,12 +15,14 @@ RSpec.describe TestingRecord::Model do
 
   before { silence_logger! }
 
+  before do
+    stub_const('FakeModel', Class.new(described_class))
+    stub_const('FakeOtherModel', Class.new(described_class))
+  end
+
   describe '.create' do
     context 'with caching enabled' do
-      before do
-        stub_const('FakeModel', Class.new(described_class))
-        FakeModel.caching :enabled
-      end
+      before { FakeModel.caching :enabled }
 
       it 'generates a new instance of the entity' do
         expect(FakeModel.create(foo: 1)).to be_a FakeModel
@@ -38,10 +40,7 @@ RSpec.describe TestingRecord::Model do
     end
 
     context 'without caching enabled' do
-      before do
-        stub_const('FakeModel', Class.new(described_class))
-        FakeModel.caching :disabled
-      end
+      before { FakeModel.caching :disabled }
 
       it 'generates a new instance of the entity' do
         expect(FakeModel.create(foo: 1)).to be_a FakeModel
@@ -51,8 +50,6 @@ RSpec.describe TestingRecord::Model do
 
   describe '.current=' do
     before do
-      stub_const('FakeModel', Class.new(described_class))
-      stub_const('FakeOtherModel', Class.new(described_class))
       FakeModel.caching :enabled
       primary_model_entity
       FakeModel.create({ id: 2 })
@@ -72,11 +69,6 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '.delete' do
-    before do
-      stub_const('FakeModel', Class.new(described_class))
-      stub_const('FakeOtherModel', Class.new(described_class))
-    end
-
     context 'with caching enabled' do
       before do
         FakeModel.caching :enabled
@@ -107,11 +99,6 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '.delete_by_id' do
-    before do
-      stub_const('FakeModel', Class.new(described_class))
-      stub_const('FakeOtherModel', Class.new(described_class))
-    end
-
     context 'with caching enabled' do
       before do
         FakeModel.caching :enabled

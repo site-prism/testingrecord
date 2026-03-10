@@ -19,3 +19,6 @@ Gemspec/RequireMFA:
 
 Layout/LineLength:
   Max: 200
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
