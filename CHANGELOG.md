@@ -2,6 +2,7 @@
 ### Removed
 
 ### Added
+- Allow entity deletion by id when caching is enabled - using `.delete_by_id` class method
 
 ### Changed
 - **BREAKING CHANGE**: Ensure all keys passed into `.create` / `#update` are symbols to ensure consistency

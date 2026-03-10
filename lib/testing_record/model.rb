@@ -37,6 +37,13 @@ module TestingRecord
         all.delete(entity) if respond_to?(:all)
       end
 
+      # Deletes the instance of the model from the cache (Does nothing if caching is disabled)
+      #
+      # @return [TestingRecord::Model]
+      def delete_by_id(id)
+        delete(with_id(id)) if respond_to?(:all)
+      end
+
       private
 
       def cache_entity(entity)

@@ -10,6 +10,8 @@ RSpec.describe TestingRecord::Model do
       end
     end
   end
+  let(:primary_model_entity) { FakeModel.create({ id: 1 }) }
+  let(:secondary_model_entity) { FakeOtherModel.create({ id: 1 }) }
 
   describe '.create' do
     context 'with caching enabled' do
@@ -46,9 +48,6 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '.delete' do
-    let(:primary_model_entity) { FakeModel.create({ id: 1 }) }
-    let(:secondary_model_entity) { FakeOtherModel.create({ id: 1 }) }
-
     before do
       stub_const('FakeModel', Class.new(described_class))
       stub_const('FakeOtherModel', Class.new(described_class))
@@ -79,6 +78,41 @@ RSpec.describe TestingRecord::Model do
 
       it 'does nothing' do
         expect(FakeModel.delete(primary_model_entity)).to be_nil
+      end
+    end
+  end
+
+  describe '.delete_by_id' do
+    before do
+      stub_const('FakeModel', Class.new(described_class))
+      stub_const('FakeOtherModel', Class.new(described_class))
+    end
+
+    context 'with caching enabled' do
+      before do
+        FakeModel.caching :enabled
+        FakeOtherModel.caching :enabled
+        primary_model_entity
+        secondary_model_entity
+      end
+
+      it 'deletes an entity using an id that is present in the cache' do
+        expect { FakeModel.delete_by_id(1) }.to change(FakeModel.all, :length).by(-1)
+      end
+
+      it 'does not delete entities with ids that are not present in the cache' do
+        expect { FakeModel.delete_by_id(2) }.not_to change(FakeModel.all, :length)
+      end
+    end
+
+    context 'without caching enabled' do
+      before do
+        FakeModel.caching :disabled
+        primary_model_entity
+      end
+
+      it 'does nothing' do
+        expect(FakeModel.delete_by_id(1)).to be_nil
       end
     end
   end
