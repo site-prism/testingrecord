@@ -2,6 +2,11 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+## [0.8] - 2026-03-10
+### Added
 - Allow entity deletion by id when caching is enabled - using `.delete_by_id` class method
 
 ### Changed
@@ -81,7 +86,8 @@ add all helpers to all attributes on a model
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.7...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.8...HEAD
+[0.8]:          https://github.com/site-prism/testingrecord/compare/v0.7...v0.8
 [0.7]:          https://github.com/site-prism/testingrecord/compare/v0.6...v0.7
 [0.6]:          https://github.com/site-prism/testingrecord/compare/v0.5...v0.6
 [0.5]:          https://github.com/site-prism/testingrecord/compare/v0.4.1...v0.5
