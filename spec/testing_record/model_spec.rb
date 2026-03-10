@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::Model do
-  subject(:instance) { refined_class.create({ bar: 'value1', baz: 42 }) }
-
   let(:refined_class) do
     Class.new(described_class) do
       def self.name
@@ -10,8 +8,8 @@ RSpec.describe TestingRecord::Model do
       end
     end
   end
-  let(:primary_model_entity) { FakeModel.create({ id: 1 }) }
-  let(:secondary_model_entity) { FakeOtherModel.create({ id: 1 }) }
+  let(:primary_model_entity) { FakeModel.create({ id: 1, foo: :foo, bar: :bar }) }
+  let(:secondary_model_entity) { FakeOtherModel.create({ id: 1, foo: :foo, bar: :bar }) }
 
   before { silence_logger! }
 
@@ -56,7 +54,7 @@ RSpec.describe TestingRecord::Model do
     end
 
     it 'writes a log message informing you when changing current entity' do
-      expect(TestingRecord.logger).to receive(:info).with('Switching current user from #<FakeModel @id=2> to #<FakeModel @id=1>')
+      expect(TestingRecord.logger).to receive(:info).with('Switching current user from #<FakeModel @id=2> to #<FakeModel @id=1, @foo=:foo, @bar=:bar>')
 
       FakeModel.current = primary_model_entity
     end
@@ -130,34 +128,32 @@ RSpec.describe TestingRecord::Model do
 
   describe '#inspect' do
     it 'returns a string representation of the model with its attributes' do
-      expect(instance.inspect).to eq('#<Namespace::AnonymousModel @bar="value1", @baz=42>')
+      expect(primary_model_entity.inspect).to eq('#<FakeModel @id=1, @foo=:foo, @bar=:bar>')
     end
 
     it 'shows the primary attribute first if defined' do
-      refined_class.primary_key :baz
-      expect(instance.inspect).to eq('#<Namespace::AnonymousModel @baz=42, @bar="value1">')
+      FakeModel.primary_key :bar
+      expect(primary_model_entity.inspect).to eq('#<FakeModel @bar=:bar, @id=1, @foo=:foo>')
     end
   end
 
   describe '#to_s' do
     it 'returns the same string as #inspect' do
-      expect(instance.to_s).to eq(instance.inspect)
+      expect(primary_model_entity.to_s).to eq(primary_model_entity.inspect)
     end
   end
 
   describe '#update' do
-    subject(:instance) { described_class.create({ bar: 'initial', baz: 'initial' }) }
-
     it 'updates the attribute values on the instance' do
-      instance.update({ bar: 'updated' })
+      primary_model_entity.update({ bar: 'updated' })
 
-      expect(instance.bar).to eq('updated')
+      expect(primary_model_entity.bar).to eq('updated')
     end
 
     it 'updates the attributes hash accordingly' do
-      instance.update({ baz: 'bazzy' })
+      primary_model_entity.update({ baz: 'bazzy' })
 
-      expect(instance.attributes[:baz]).to eq('bazzy')
+      expect(primary_model_entity.attributes[:baz]).to eq('bazzy')
     end
   end
 end
