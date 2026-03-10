@@ -49,6 +49,28 @@ RSpec.describe TestingRecord::Model do
     end
   end
 
+  describe '.current=' do
+    before do
+      stub_const('FakeModel', Class.new(described_class))
+      stub_const('FakeOtherModel', Class.new(described_class))
+      FakeModel.caching :enabled
+      primary_model_entity
+      FakeModel.create({ id: 2 })
+    end
+
+    it 'writes a log message informing you when changing current entity' do
+      expect(TestingRecord.logger).to receive(:info).with('Switching current user from #<FakeModel @id=2> to #<FakeModel @id=1>')
+
+      FakeModel.current = primary_model_entity
+    end
+
+    it 'writes a log message informing you when purging the current entity' do
+      expect(TestingRecord.logger).to receive(:info).with('Purging current user: #<FakeModel @id=2>')
+
+      FakeModel.current = nil
+    end
+  end
+
   describe '.delete' do
     before do
       stub_const('FakeModel', Class.new(described_class))
