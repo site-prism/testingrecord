@@ -14,7 +14,7 @@ module TestingRecord
     attr_reader :attributes
 
     class << self
-      attr_accessor :current
+      attr_reader :current
 
       # Creates an instance of the model
       #   -> Creating iVar values for each attribute that was provided
@@ -28,6 +28,15 @@ module TestingRecord
           add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
           cache_entity(entity)
         end
+      end
+
+      def current=(entity)
+        if entity
+          TestingRecord.logger.info("Switching current user from #{@current} to #{entity}")
+        else
+          TestingRecord.logger.info("Purging current user: #{@current}")
+        end
+        @current = entity
       end
 
       # Deletes the instance of the model from the cache (Does nothing if caching is disabled)
