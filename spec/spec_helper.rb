@@ -14,4 +14,8 @@ RSpec.configure do |config|
 
     TestingRecord.remove_instance_variable(:@logger)
   end
+
+  def silence_logger!
+    TestingRecord.log_level = :UNKNOWN
+  end
 end

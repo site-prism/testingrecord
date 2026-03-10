@@ -13,6 +13,8 @@ RSpec.describe TestingRecord::Model do
   let(:primary_model_entity) { FakeModel.create({ id: 1 }) }
   let(:secondary_model_entity) { FakeOtherModel.create({ id: 1 }) }
 
+  before { silence_logger! }
+
   describe '.create' do
     context 'with caching enabled' do
       before do
