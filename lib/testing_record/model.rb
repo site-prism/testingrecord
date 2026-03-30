@@ -45,8 +45,8 @@ module TestingRecord
       def delete(entity)
         return unless respond_to?(:all)
 
-        all.delete(entity)
         self.current = nil if entity == current
+        all.delete(entity)
       end
 
       # Deletes the instance of the model from the cache (Does nothing if caching is disabled)
