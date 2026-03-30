@@ -45,7 +45,7 @@ add all helpers to all attributes on a model
 
 ## [0.5] - 2025-12-30
 ### Breaking Changes
-- Renamed the cache to `:all` and the iVar` to `@all` for clarity
+- Renamed the cache to `:all` and the ivar to `@all` for clarity
 
 ### Added
 - Added humanized form of `#inspect` and `#to_s` for better readability when outputting model instances
