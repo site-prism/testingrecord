@@ -6,6 +6,7 @@
 ### Added
 
 ### Changed
+- Deletion calls will now also purge `.current` if the deleted entity is the current entity when caching is enabled
 
 ### Fixed
 
