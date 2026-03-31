@@ -1,16 +1,23 @@
 ## [Unreleased]
+### Breaking Changes
+
 ### Removed
 
 ### Added
 
 ### Changed
+- Deletion calls will now also purge `.current` if the deleted entity is the current entity when caching is enabled
+
+### Fixed
 
 ## [0.8] - 2026-03-10
+### Breaking Changes
+- Ensure all keys passed into `.create` / `#update` are symbols to ensure consistency
+
 ### Added
 - Allow entity deletion by id when caching is enabled - using `.delete_by_id` class method
 
 ### Changed
-- **BREAKING CHANGE**: Ensure all keys passed into `.create` / `#update` are symbols to ensure consistency
 - Permit `automation_helpers` v7
 - When updating the value of `entity.current`, echo an appropriate log dependent on whether the record was updated or purged
 
@@ -37,6 +44,9 @@ add all helpers to all attributes on a model
 - The primary key (if defined), re-orders attributes and their inspected values to show the primary id attribute first
 
 ## [0.5] - 2025-12-30
+### Breaking Changes
+- Renamed the cache to `:all` and the ivar to `@all` for clarity
+
 ### Added
 - Added humanized form of `#inspect` and `#to_s` for better readability when outputting model instances
 - Added internal logger
@@ -48,15 +58,15 @@ add all helpers to all attributes on a model
 - Added ability to provide the primary key for a model via `.primary_key` class method
   - This will be used in the future for deduplication logic
 
-### Changed
-- **BREAKING CHANGE**: Renamed the cache to `:all` and the iVar` to `@all` for clarity
-
 ## [0.4.1] - 2025-12-22
 ### Fixed
 - Removed the `type` config as this was broken, across both model and attribute
 - Properly determine the presence helper value based on the outputted value not the type inferred
 
 ## [0.4] - 2025-12-16
+### Breaking Changes
+- Renamed the `property` and `properties` methods to `attribute` and `attributes` respectively
+
 ### Added
 - Added iVars into model instantiation for each attribute in creation hash
 - Moved the majority of the model methods out to a new settings class to encapsulate settings of a model
@@ -64,7 +74,6 @@ add all helpers to all attributes on a model
 - When calling `Model.create` the output is stored as the current entity for the model in question
 
 ### Changed
-- **BREAKING CHANGE**: Renamed the `property` and `properties` methods to `attribute` and `attributes` respectively
 - Improved the first "any" helper (Now renamed to presence), to check for more nuanced items
   - For singular / default items, it checks the string is not empty
   - For plural items, it still checks if any are present

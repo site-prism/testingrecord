@@ -81,6 +81,10 @@ RSpec.describe TestingRecord::Model do
       it 'does not delete entities that are not present in the cache' do
         expect { FakeModel.delete(secondary_model_entity) }.not_to change(FakeModel.all, :length)
       end
+
+      it 'removes the entity from being assigned to `.current`' do
+        expect { FakeModel.delete(primary_model_entity) }.to change(FakeModel, :current).to(nil)
+      end
     end
 
     context 'without caching enabled' do
@@ -110,6 +114,10 @@ RSpec.describe TestingRecord::Model do
 
       it 'does not delete entities with ids that are not present in the cache' do
         expect { FakeModel.delete_by_id(2) }.not_to change(FakeModel.all, :length)
+      end
+
+      it 'removes the entity from being assigned to `.current`' do
+        expect { FakeModel.delete_by_id(1) }.to change(FakeModel, :current).to(nil)
       end
     end
 
