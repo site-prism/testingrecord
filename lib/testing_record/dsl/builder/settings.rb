@@ -16,7 +16,7 @@ module TestingRecord
         #
         # @return [Symbol]
         def caching(option)
-          raise Error, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
+          raise Error::InvalidConfigurationError, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
           return unless option == :enabled
 
           instance_variable_set(:@all, [])

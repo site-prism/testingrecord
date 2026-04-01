@@ -40,7 +40,7 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
       end
 
       it 'cannot be configured on the model' do
-        expect { FakeModel.caching :invalid }.to raise_error(TestingRecord::Error)
+        expect { FakeModel.caching :invalid }.to raise_error(TestingRecord::Error::InvalidConfigurationError)
       end
     end
   end

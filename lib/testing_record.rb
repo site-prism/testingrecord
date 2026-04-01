@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 require_relative 'testing_record/dsl'
+require_relative 'testing_record/error'
 require_relative 'testing_record/logger'
 require_relative 'testing_record/model'
 require_relative 'testing_record/version'
 
 # {TestingRecord} namespace
 module TestingRecord
-  # Generic TestingRecord error. Will be extended in the future
-  class Error < StandardError; end
-
   class << self
+    def configure
+      yield self
+    end
+
     # The Testing Record logger object - This is called automatically in several
     # locations and will log messages according to the normal Ruby protocol
     #
