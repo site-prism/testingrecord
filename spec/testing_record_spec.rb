@@ -6,6 +6,22 @@ describe TestingRecord do
   # Stop the $stdout process leaking cross-tests
   before { wipe_logger! }
 
+  describe '.configure' do
+    it 'can configure items in a configure block' do
+      expect(described_class).to receive(:configure).once
+
+      described_class.configure { |_| :foo }
+    end
+
+    it 'yields the configured options' do
+      expect(described_class).to receive(:log_level=).with(:WARN)
+
+      described_class.configure do |config|
+        config.log_level = :WARN
+      end
+    end
+  end
+
   describe '.logger' do
     it 'logs messages at every level by default' do
       log_messages = capture_stdout do
