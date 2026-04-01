@@ -3,6 +3,7 @@
 require_relative 'testing_record/dsl'
 require_relative 'testing_record/error'
 require_relative 'testing_record/logger'
+require_relative 'testing_record/model'
 require_relative 'testing_record/version'
 
 # {TestingRecord} namespace
@@ -15,7 +16,8 @@ module TestingRecord
     # Set default primary key to `:id`
     TestingRecord.default_primary_key = :id
 
-    require_relative 'testing_record/model'
+    # TODO: Fix situation where changing the setting does not update the base model
+    # Base Model should always use the setting (re-fetched)
 
     def configure
       yield self
