@@ -10,7 +10,16 @@ module TestingRecord
       module Settings
         include DSL::Validation::Input
 
-        attr_reader :__primary_key
+        attr_writer :__primary_key
+
+        def __primary_key
+          @__primary_key ||=
+            if superclass.respond_to?(:__primary_key)
+              superclass.__primary_key
+            else
+              TestingRecord.default_primary_key
+            end
+        end
 
         # Create a cache of the entities, named according to the classname
         #

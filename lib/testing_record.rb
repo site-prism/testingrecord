@@ -3,7 +3,6 @@
 require_relative 'testing_record/dsl'
 require_relative 'testing_record/error'
 require_relative 'testing_record/logger'
-require_relative 'testing_record/model'
 require_relative 'testing_record/version'
 
 # {TestingRecord} namespace
@@ -12,6 +11,11 @@ module TestingRecord
     # TestingRecord will set a default primary key for all models
     # You can override this by configuring one here
     attr_accessor :default_primary_key
+
+    # Set default primary key to `:id`
+    TestingRecord.default_primary_key = :id
+
+    require_relative 'testing_record/model'
 
     def configure
       yield self
@@ -58,6 +62,3 @@ module TestingRecord
     end
   end
 end
-
-# Set default primary key to `:id`
-TestingRecord.default_primary_key = :id
