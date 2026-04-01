@@ -65,6 +65,12 @@ describe TestingRecord do
     end
   end
 
+  describe '.default_primary_key' do
+    it 'is set to `:id` by default' do
+      expect(described_class.default_primary_key).to eq(:id)
+    end
+  end
+
   describe '.log_level' do
     subject { described_class.log_level }
 
