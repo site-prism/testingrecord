@@ -71,6 +71,12 @@ describe TestingRecord do
     end
   end
 
+  describe '.default_primary_key=' do
+    it 'can alter the default_primary_key value' do
+      expect(described_class).to respond_to(:default_primary_key=)
+    end
+  end
+
   describe '.log_level' do
     subject { described_class.log_level }
 

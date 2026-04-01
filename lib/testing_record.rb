@@ -9,19 +9,23 @@ require_relative 'testing_record/version'
 # {TestingRecord} namespace
 module TestingRecord
   class << self
-    # TestingRecord will set a default primary key for all models
-    # You can override this by configuring one here
-    attr_accessor :default_primary_key
-
-    # Set default primary key to `:id`
-    TestingRecord.default_primary_key = :id
-
-    # TODO: Fix situation where changing the setting does not update the base model
-    # Base Model should always use the setting (re-fetched)
+    attr_reader :default_primary_key
 
     def configure
       yield self
     end
+
+    # TestingRecord will set a default primary key for all models
+    # You can override this by configuring one here
+    def default_primary_key=(value)
+      @default_primary_key = value
+      # TODO: Fix situation where changing the setting does not update the base model
+      # Base Model should always use the setting (re-fetched)
+      TestingRecord::Model.primary_key value
+    end
+
+    # Set default primary key to `:id`
+    TestingRecord.default_primary_key = :id
 
     # The Testing Record logger object - This is called automatically in several
     # locations and will log messages according to the normal Ruby protocol
