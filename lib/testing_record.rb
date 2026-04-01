@@ -15,16 +15,13 @@ module TestingRecord
       yield self
     end
 
-    # TestingRecord will set a default primary key for all models
-    # You can override this by configuring one here
+    # Configure a default primary key for all TestingRecord models
     def default_primary_key=(value)
       @default_primary_key = value
-      # TODO: Fix situation where changing the setting does not update the base model
-      # Base Model should always use the setting (re-fetched)
       TestingRecord::Model.primary_key value
     end
 
-    # Set default primary key to `:id`
+    # Specify the default primary key to `:id` (This is procedural so will be overwritten at runtime if config defined)
     TestingRecord.default_primary_key = :id
 
     # The Testing Record logger object - This is called automatically in several
