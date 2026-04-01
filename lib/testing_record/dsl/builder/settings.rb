@@ -10,8 +10,6 @@ module TestingRecord
       module Settings
         include DSL::Validation::Input
 
-        attr_writer :__primary_key
-
         def __primary_key
           @__primary_key ||=
             if superclass.respond_to?(:__primary_key)
