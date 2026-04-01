@@ -4,10 +4,6 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
   subject(:klazz) do
     Class.new do
       extend TestingRecord::DSL::Builder::Settings
-
-      def initialize(attributes = {})
-        @attributes = attributes
-      end
     end
   end
 
@@ -46,14 +42,14 @@ RSpec.describe TestingRecord::DSL::Builder::Settings do
   end
 
   describe '.primary_key' do
-    let(:refined_class) do
+    subject(:refined_class) do
       Class.new(klazz) do
-        primary_key :id
+        primary_key :baz
       end
     end
 
-    it 'stores a primary key value' do
-      expect(refined_class.__primary_key).to eq(:id)
+    it 'stores the primary key on the model' do
+      expect(refined_class.__primary_key).to eq(:baz)
     end
   end
 end
