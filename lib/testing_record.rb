@@ -17,6 +17,8 @@ module TestingRecord
 
     # Configure a default primary key for all TestingRecord models
     def default_primary_key=(value)
+      raise InvalidConfigurationError, 'Invalid primary key value, must be a Symbol' unless value.is_a?(Symbol)
+
       @default_primary_key = value
       TestingRecord::Model.primary_key value
     end
