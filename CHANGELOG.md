@@ -5,7 +5,7 @@
 ### Removed
 
 ### Added
-- Add ability to change the default primary key for all models by using `TestingRecord.primary_key = :my_id`
+- Add ability to change the default primary key for all models by using `TestingRecord.default_primary_key = :my_id`
 
 ### Changed
 - Deletion calls will now also purge `.current` if the deleted entity is the current entity when caching is enabled
