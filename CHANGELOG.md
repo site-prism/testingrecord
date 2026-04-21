@@ -12,6 +12,8 @@
 
 ### Fixed
 
+### Security
+
 ## [0.8] - 2026-03-10
 ### Breaking Changes
 - Ensure all keys passed into `.create` / `#update` are symbols to ensure consistency
