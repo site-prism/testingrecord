@@ -36,7 +36,7 @@ module TestingRecord
         #
         # @return [Symbol]
         def primary_key(option)
-          raise InvalidConfigurationError, 'Invalid primary key value, must be a Symbol' unless option.is_a?(Symbol)
+          raise Error::InvalidConfigurationError, 'Invalid primary key value, must be a Symbol' unless option.is_a?(Symbol)
 
           instance_variable_set(:@__primary_key, option)
         end
