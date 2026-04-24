@@ -23,7 +23,7 @@ module TestingRecord
       #
       # @return [TestingRecord::Model]
       def create(attributes)
-        # ensure_deduplication(attributes)
+        ensure_deduplication(attributes)
         new(attributes.transform_keys(&:to_sym)).tap do |entity|
           configure_data(entity, attributes)
           add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
@@ -72,6 +72,14 @@ module TestingRecord
           entity.instance_variable_set("@#{attribute_key}", attribute_value)
           entity.class.attr_reader attribute_key
         end
+      end
+
+      def ensure_deduplication(attributes)
+        pk_value = attributes[__primary_key]
+        return unless with_primary_key?(pk_value)
+
+        TestingRecord.logger.debug("#{self} entity already exists with primary key: #{pk_value}")
+        raise "#{self} entity already exists with primary key: #{pk_value}"
       end
     end
 
