@@ -76,6 +76,8 @@ module TestingRecord
       end
 
       def ensure_deduplication(attributes)
+        return unless respond_to?(:all)
+
         pk_value = attributes[__primary_key]
         return unless with_primary_key?(pk_value)
 
