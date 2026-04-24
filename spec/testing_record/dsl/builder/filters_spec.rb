@@ -4,6 +4,7 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   subject(:model_klazz) do
     Class.new(TestingRecord::Model) do
       caching :enabled
+      primary_key :email_address
     end
   end
 
@@ -48,6 +49,9 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   end
 
   describe '.with_id' do
+    before { model_klazz.primary_key :id }
+    after { model_klazz.primary_key :email_address }
+
     context 'when entity does not exist' do
       it 'does not find a model' do
         expect(model_klazz.with_id(1)).to be_nil
@@ -67,6 +71,9 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   end
 
   describe '.with_id?' do
+    before { model_klazz.primary_key :id }
+    after { model_klazz.primary_key :email_address }
+
     context 'when entity does not exist' do
       it 'is `false`' do
         expect(model_klazz.with_id?(1)).to be false
@@ -86,8 +93,8 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   end
 
   describe '.with_primary_key' do
-    before { TestingRecord.default_primary_key = :peekay }
-    after { TestingRecord.default_primary_key = :id }
+    before { model_klazz.primary_key :peekay }
+    after { model_klazz.primary_key :email_address }
 
     context 'when entity does not exist' do
       it 'does not find a model' do
@@ -108,8 +115,8 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   end
 
   describe '.with_primary_key?' do
-    before { TestingRecord.default_primary_key = :peekay }
-    after { TestingRecord.default_primary_key = :id }
+    before { model_klazz.primary_key :peekay }
+    after { model_klazz.primary_key :email_address }
 
     context 'when entity does not exist' do
       it 'is `false`' do

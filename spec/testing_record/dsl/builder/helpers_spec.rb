@@ -4,6 +4,7 @@ RSpec.describe TestingRecord::DSL::Builder::Helpers do
   subject(:klazz) do
     Class.new(TestingRecord::Model) do
       include_helpers
+      primary_key :foo
     end
   end
 
