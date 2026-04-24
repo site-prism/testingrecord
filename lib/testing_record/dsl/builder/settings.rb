@@ -10,13 +10,21 @@ module TestingRecord
       module Settings
         include DSL::Validation::Input
 
-        attr_reader :__primary_key
+        def __primary_key
+          if instance_variable_defined?(:@__primary_key)
+            @__primary_key
+          elsif superclass.respond_to?(:__primary_key)
+            superclass.__primary_key
+          else
+            TestingRecord.default_primary_key
+          end
+        end
 
         # Create a cache of the entities, named according to the classname
         #
         # @return [Symbol]
         def caching(option)
-          raise Error, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
+          raise Error::InvalidConfigurationError, 'Invalid caching option, must be :enabled or :disabled' unless caching_valid?(option)
           return unless option == :enabled
 
           instance_variable_set(:@all, [])
@@ -28,7 +36,9 @@ module TestingRecord
         #
         # @return [Symbol]
         def primary_key(option)
-          instance_variable_set(:@__primary_key, option.to_sym)
+          raise Error::InvalidConfigurationError, 'Invalid primary key value, must be a Symbol' unless option.is_a?(Symbol)
+
+          instance_variable_set(:@__primary_key, option)
         end
       end
     end

@@ -1,16 +1,31 @@
 # frozen_string_literal: true
 
 require_relative 'testing_record/dsl'
+require_relative 'testing_record/error'
 require_relative 'testing_record/logger'
 require_relative 'testing_record/model'
 require_relative 'testing_record/version'
 
 # {TestingRecord} namespace
 module TestingRecord
-  # Generic TestingRecord error. Will be extended in the future
-  class Error < StandardError; end
-
   class << self
+    attr_reader :default_primary_key
+
+    def configure
+      yield self
+    end
+
+    # Configure a default primary key for all TestingRecord models
+    def default_primary_key=(value)
+      raise InvalidConfigurationError, 'Invalid primary key value, must be a Symbol' unless value.is_a?(Symbol)
+
+      @default_primary_key = value
+      TestingRecord::Model.primary_key value
+    end
+
+    # Specify the default primary key to `:id` (This is procedural so will be overwritten at runtime if config defined)
+    TestingRecord.default_primary_key = :id
+
     # The Testing Record logger object - This is called automatically in several
     # locations and will log messages according to the normal Ruby protocol
     #

@@ -1,14 +1,19 @@
 ## [Unreleased]
 ### Breaking Changes
+- Set a default primary key of `:id` to all models
 
 ### Removed
 
 ### Added
+- Add ability to change the default primary key for all models by using `TestingRecord.default_primary_key = :my_id`
 
 ### Changed
 - Deletion calls will now also purge `.current` if the deleted entity is the current entity when caching is enabled
+- All Error classes are now namespaced under `TestingRecord::Error` for correct error handling
 
 ### Fixed
+
+### Security
 
 ## [0.8] - 2026-03-10
 ### Breaking Changes

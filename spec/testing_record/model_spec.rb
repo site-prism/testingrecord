@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::Model do
-  let(:refined_class) do
-    Class.new(described_class) do
-      def self.name
-        'Namespace::AnonymousModel'
-      end
-    end
-  end
   let(:primary_model_entity) { FakeModel.create({ id: 1, foo: :foo, bar: :bar }) }
   let(:secondary_model_entity) { FakeOtherModel.create({ id: 1, foo: :foo, bar: :bar }) }
 
@@ -134,13 +127,20 @@ RSpec.describe TestingRecord::Model do
   end
 
   describe '#inspect' do
+    after { TestingRecord.default_primary_key = :id }
+
     it 'returns a string representation of the model with its attributes' do
       expect(primary_model_entity.inspect).to eq('#<FakeModel @id=1, @foo=:foo, @bar=:bar>')
     end
 
-    it 'shows the primary attribute first if defined' do
+    it 'shows the primary attribute first if defined in the model' do
       FakeModel.primary_key :bar
       expect(primary_model_entity.inspect).to eq('#<FakeModel @bar=:bar, @id=1, @foo=:foo>')
+    end
+
+    it 'shows the primary attribute first if defined as a config setting' do
+      TestingRecord.default_primary_key = :foo
+      expect(primary_model_entity.inspect).to eq('#<FakeModel @foo=:foo, @id=1, @bar=:bar>')
     end
   end
 
