@@ -84,4 +84,26 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
       end
     end
   end
+
+  describe '.with_primary_key' do
+    before { TestingRecord.default_primary_key = :peekay }
+    after { TestingRecord.default_primary_key = :id }
+
+    context 'when entity does not exist' do
+      it 'does not find a model' do
+        expect(model_klazz.with_primary_key(1)).to be_nil
+      end
+    end
+
+    context 'when entity exists' do
+      before do
+        model_klazz.create({ peekay: 1 })
+        model_klazz.create({ peekay: 2 })
+      end
+
+      it 'finds the first matching model' do
+        expect(model_klazz.with_primary_key(1)).to be_a TestingRecord::Model
+      end
+    end
+  end
 end

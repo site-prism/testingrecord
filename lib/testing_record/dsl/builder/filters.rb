@@ -36,6 +36,14 @@ module TestingRecord
           find_by({ id: })&.first&.tap { |entity| entity.class.current = entity }
         end
 
+        # Finds an entity with the provided primary_key
+        #   If one is found, set it as the current entity
+        #
+        # @return [TestingRecord::Model, nil]
+        def with_primary_key(primary_key)
+          find_by({ __primary_key => primary_key })&.first&.tap { |entity| entity.class.current = entity }
+        end
+
         private
 
         # Finds all entities that match specified attribute values
