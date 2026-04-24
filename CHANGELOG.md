@@ -1,11 +1,16 @@
 ## [Unreleased]
 ### Breaking Changes
 - Set a default primary key of `:id` to all models
+- All models require a primary key attribute to be present on each created entity
+- All entities are now deduplicated on their primary key value - but only when `caching` is enabled on the model
 
 ### Removed
 
 ### Added
 - Add ability to change the default primary key for all models by using `TestingRecord.default_primary_key = :my_id`
+- Added ability to filter model on `primary_key` attribute
+  - `.with_primary_key?` -> An entity exists with the `primary_key` value specified
+  - `.with_primary_key` -> Returns the entity with the `primary_key` value specified
 
 ### Changed
 - Deletion calls will now also purge `.current` if the deleted entity is the current entity when caching is enabled
@@ -40,7 +45,7 @@ add all helpers to all attributes on a model
 ## [0.6] - 2026-02-09
 ### Added
 - Added ability to filter model on `id` attribute
-  - `.with_id?` -> An entity exists that with the id specified
+  - `.with_id?` -> An entity exists with the id specified
   - `.with_id` -> Returns the entity with the id specified
 - Added ability to delete models where caching is enabled
 - When updating models, the cache is also updated to reflect the new values
