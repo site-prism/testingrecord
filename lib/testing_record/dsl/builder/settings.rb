@@ -11,12 +11,13 @@ module TestingRecord
         include DSL::Validation::Input
 
         def __primary_key
-          @__primary_key ||=
-            if superclass.respond_to?(:__primary_key)
-              superclass.__primary_key
-            else
-              TestingRecord.default_primary_key
-            end
+          if instance_variable_defined?(:@__primary_key)
+            @__primary_key
+          elsif superclass.respond_to?(:__primary_key)
+            superclass.__primary_key
+          else
+            TestingRecord.default_primary_key
+          end
         end
 
         # Create a cache of the entities, named according to the classname
