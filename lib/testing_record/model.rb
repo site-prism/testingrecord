@@ -23,6 +23,7 @@ module TestingRecord
       #
       # @return [TestingRecord::Model]
       def create(attributes)
+        ensure_primary_key_presence(attributes)
         ensure_deduplication(attributes)
         new(attributes.transform_keys(&:to_sym)).tap do |entity|
           configure_data(entity, attributes)
@@ -78,8 +79,14 @@ module TestingRecord
         pk_value = attributes[__primary_key]
         return unless with_primary_key?(pk_value)
 
-        TestingRecord.logger.debug("#{self} entity already exists with primary key: #{pk_value}")
-        raise "#{self} entity already exists with primary key: #{pk_value}"
+        TestingRecord.logger.error("#{name} entity already exists with primary key: #{pk_value}")
+        raise Error::AttributeError, "#{name} entity already exists with primary key: #{pk_value}"
+      end
+
+      def ensure_primary_key_presence(attributes)
+        return if attributes.key?(__primary_key)
+
+        raise Error::AttributeError, "#{name} entity has not been supplied with the primary key: #{__primary_key}"
       end
     end
 
