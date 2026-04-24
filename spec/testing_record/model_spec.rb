@@ -135,6 +135,7 @@ RSpec.describe TestingRecord::Model do
     after do
       TestingRecord.default_primary_key = @original_default_primary_key
     end
+
     it 'returns a string representation of the model with its attributes' do
       expect(primary_model_entity.inspect).to eq('#<FakeModel @id=1, @foo=:foo, @bar=:bar>')
     end

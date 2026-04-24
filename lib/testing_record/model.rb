@@ -110,7 +110,7 @@ module TestingRecord
     private
 
     def reorder_attributes_for_inspect!
-      return if attributes.keys.start_with?(self.class.__primary_key)
+      return if attributes.keys.first == self.class.__primary_key
 
       pk_value = attributes.delete(self.class.__primary_key)
       @attributes = { self.class.__primary_key => pk_value }.merge(attributes)
