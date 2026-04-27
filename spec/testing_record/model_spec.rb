@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe TestingRecord::Model do
-  let(:primary_model_entity) { FakeModel.create({ id: 1, foo: :foo, bar: :bar }) }
-  let(:secondary_model_entity) { FakeOtherModel.create({ id: 1, foo: :foo, bar: :bar }) }
+  let(:primary_model_entity) { FakeModel.create(model_attributes) }
+  let(:model_attributes) { { id: 1, foo: :foo, bar: :bar } }
+  let(:secondary_model_entity) { FakeOtherModel.create(model_attributes) }
 
   before do
     silence_logger!
@@ -14,8 +15,36 @@ RSpec.describe TestingRecord::Model do
     context 'with caching enabled' do
       before { FakeModel.caching :enabled }
 
+      it 'ensures that the primary key attribute was set in the attributes hash' do
+        expect(FakeModel).to receive(:ensure_primary_key_presence).with(model_attributes)
+
+        primary_model_entity
+      end
+
+      it 'does not permit an entity to be created without a primary key' do
+        expect { FakeModel.create({ foo: :no_primary_key }) }
+          .to raise_error(TestingRecord::Error::AttributeError)
+          .with_message('FakeModel entity has not been supplied with the primary key: id')
+      end
+
+      it 'does not permit an entity to be created with the same primary key' do
+        primary_model_entity
+
+        expect { FakeModel.create({ id: 1, other_key: :whatever }) }
+          .to raise_error(TestingRecord::Error::EntityError)
+          .with_message('FakeModel entity already exists with primary key: 1')
+      end
+
       it 'generates a new instance of the entity' do
         expect(primary_model_entity).to be_a FakeModel
+      end
+
+      it 'creates a model with all the supplied attributes as iVars' do
+        expect(primary_model_entity.instance_variables).to contain_exactly(:@attributes, :@id, :@foo, :@bar)
+      end
+
+      it 'creates a model with all the supplied attributes as attr_readers' do
+        expect(primary_model_entity).to respond_to(:attributes, :id, :foo, :bar)
       end
 
       it 'adds the entity to the cache' do
@@ -32,8 +61,28 @@ RSpec.describe TestingRecord::Model do
     context 'without caching enabled' do
       before { FakeModel.caching :disabled }
 
+      it 'ensures that the primary key attribute was set in the attributes hash' do
+        expect(FakeModel).to receive(:ensure_primary_key_presence).with(model_attributes)
+
+        primary_model_entity
+      end
+
+      it 'does not permit an entity to be created without a primary key' do
+        expect { FakeModel.create({ foo: :no_primary_key }) }
+          .to raise_error(TestingRecord::Error::AttributeError)
+          .with_message('FakeModel entity has not been supplied with the primary key: id')
+      end
+
       it 'generates a new instance of the entity' do
         expect(primary_model_entity).to be_a FakeModel
+      end
+
+      it 'creates a model with all the supplied attributes as iVars' do
+        expect(primary_model_entity.instance_variables).to contain_exactly(:@attributes, :@id, :@foo, :@bar)
+      end
+
+      it 'creates a model with all the supplied attributes as attr_readers' do
+        expect(primary_model_entity).to respond_to(:attributes, :id, :foo, :bar)
       end
     end
   end
