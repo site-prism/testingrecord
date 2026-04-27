@@ -17,18 +17,18 @@ module TestingRecord
       attr_reader :current
 
       # Creates an instance of the model
-      #   -> Creating iVar values for each attribute that was provided
-      #   -> Adding it to the cache if caching is enabled
-      #   -> Keeping a track of all originally supplied attributes in symbolized format in the `attributes` iVar
+      #   -> Ensures that the primary key is specified in the attribute payload
+      #   -> Validates that a duplicate entity has not been made (If caching is enabled)
+      #   -> Creates iVar values (Symbol format) and attr_reader's for each attribute that was provided
+      #   -> Adds helper methods (If the model has been configured to include helpers)
+      #   -> Adds it to the cache (If caching is enabled)
       #
       # @return [TestingRecord::Model]
       def create(attributes)
-        ensure_primary_key_presence(attributes)
-        ensure_deduplication(attributes)
-        new(attributes.transform_keys(&:to_sym)).tap do |entity|
-          configure_data(entity, attributes)
-          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
-          cache_entity(entity)
+        if respond_to?(:all)
+          create_with_caching(attributes)
+        else
+          create_without_caching(attributes)
         end
       end
 
@@ -59,6 +59,24 @@ module TestingRecord
       end
 
       private
+
+      def create_with_caching(attributes)
+        ensure_primary_key_presence(attributes)
+        ensure_deduplication(attributes)
+        new(attributes.transform_keys(&:to_sym)).tap do |entity|
+          configure_data(entity, attributes)
+          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
+          cache_entity(entity)
+        end
+      end
+
+      def create_without_caching(attributes)
+        ensure_primary_key_presence(attributes)
+        new(attributes.transform_keys(&:to_sym)).tap do |entity|
+          configure_data(entity, attributes)
+          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
+        end
+      end
 
       def cache_entity(entity)
         return unless respond_to?(:all)
