@@ -99,7 +99,7 @@ module TestingRecord
         return unless with_primary_key?(pk_value)
 
         TestingRecord.logger.error("#{name} entity already exists with primary key: #{pk_value}")
-        raise Error::AttributeError, "#{name} entity already exists with primary key: #{pk_value}"
+        raise Error::EntityError, "#{name} entity already exists with primary key: #{pk_value}"
       end
 
       def ensure_primary_key_presence(attributes)
