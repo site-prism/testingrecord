@@ -17,19 +17,24 @@ module TestingRecord
       attr_reader :current
 
       # Creates an instance of the model
-      #   -> Creating iVar values for each attribute that was provided
-      #   -> Adding it to the cache if caching is enabled
-      #   -> Keeping a track of all originally supplied attributes in symbolized format in the `attributes` iVar
+      #   -> Ensures that the primary key is specified in the attribute payload
+      #   -> Validates that a duplicate entity has not been made (If caching is enabled)
+      #   -> Creates iVar values (Symbol format) and attr_reader's for each attribute that was provided
+      #   -> Adds helper methods (If the model has been configured to include helpers)
+      #   -> Adds it to the cache (If caching is enabled)
       #
       # @return [TestingRecord::Model]
       def create(attributes)
-        new(attributes.transform_keys(&:to_sym)).tap do |entity|
-          configure_data(entity, attributes)
-          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
-          cache_entity(entity)
+        if respond_to?(:all)
+          create_with_caching(attributes)
+        else
+          create_without_caching(attributes)
         end
       end
 
+      # Sets the current entity instance to the one supplied (Or removes it if supplied `nil`)
+      #
+      # @return [TestingRecord::Model, nil]
       def current=(entity)
         if entity
           TestingRecord.logger.info("Switching current user from #{@current} to #{entity}")
@@ -58,9 +63,25 @@ module TestingRecord
 
       private
 
-      def cache_entity(entity)
-        return unless respond_to?(:all)
+      def create_with_caching(attributes)
+        ensure_primary_key_presence(attributes)
+        ensure_deduplication(attributes)
+        new(attributes.transform_keys(&:to_sym)).tap do |entity|
+          configure_data(entity, attributes)
+          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
+          cache_entity(entity)
+        end
+      end
 
+      def create_without_caching(attributes)
+        ensure_primary_key_presence(attributes)
+        new(attributes.transform_keys(&:to_sym)).tap do |entity|
+          configure_data(entity, attributes)
+          add_helpers(attributes) if entity.class.instance_variable_get(:@include_helpers)
+        end
+      end
+
+      def cache_entity(entity)
         self.current = entity
         all << entity
         TestingRecord.logger.debug("Entity: #{entity} added to cache")
@@ -71,6 +92,20 @@ module TestingRecord
           entity.instance_variable_set("@#{attribute_key}", attribute_value)
           entity.class.attr_reader attribute_key
         end
+      end
+
+      def ensure_deduplication(attributes)
+        pk_value = attributes[__primary_key]
+        return unless with_primary_key?(pk_value)
+
+        TestingRecord.logger.error("#{name} entity already exists with primary key: #{pk_value}")
+        raise Error::EntityError, "#{name} entity already exists with primary key: #{pk_value}"
+      end
+
+      def ensure_primary_key_presence(attributes)
+        return if attributes.key?(__primary_key)
+
+        raise Error::AttributeError, "#{name} entity has not been supplied with the primary key: #{__primary_key}"
       end
     end
 

@@ -4,6 +4,7 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   subject(:model_klazz) do
     Class.new(TestingRecord::Model) do
       caching :enabled
+      primary_key :email_address
     end
   end
 
@@ -48,6 +49,9 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   end
 
   describe '.with_id' do
+    before { model_klazz.primary_key :id }
+    after { model_klazz.primary_key :email_address }
+
     context 'when entity does not exist' do
       it 'does not find a model' do
         expect(model_klazz.with_id(1)).to be_nil
@@ -67,6 +71,9 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
   end
 
   describe '.with_id?' do
+    before { model_klazz.primary_key :id }
+    after { model_klazz.primary_key :email_address }
+
     context 'when entity does not exist' do
       it 'is `false`' do
         expect(model_klazz.with_id?(1)).to be false
@@ -81,6 +88,50 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
 
       it 'is `true`' do
         expect(model_klazz.with_id?(1)).to be true
+      end
+    end
+  end
+
+  describe '.with_primary_key' do
+    before { model_klazz.primary_key :peekay }
+    after { model_klazz.primary_key :email_address }
+
+    context 'when entity does not exist' do
+      it 'does not find a model' do
+        expect(model_klazz.with_primary_key(1)).to be_nil
+      end
+    end
+
+    context 'when entity exists' do
+      before do
+        model_klazz.create({ peekay: 1 })
+        model_klazz.create({ peekay: 2 })
+      end
+
+      it 'finds the first matching model' do
+        expect(model_klazz.with_primary_key(1)).to be_a TestingRecord::Model
+      end
+    end
+  end
+
+  describe '.with_primary_key?' do
+    before { model_klazz.primary_key :peekay }
+    after { model_klazz.primary_key :email_address }
+
+    context 'when entity does not exist' do
+      it 'is `false`' do
+        expect(model_klazz.with_primary_key?(1)).to be false
+      end
+    end
+
+    context 'when entity exists' do
+      before do
+        model_klazz.create({ peekay: 1 })
+        model_klazz.create({ peekay: 2 })
+      end
+
+      it 'is `true`' do
+        expect(model_klazz.with_primary_key?(1)).to be true
       end
     end
   end
