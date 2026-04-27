@@ -32,6 +32,9 @@ module TestingRecord
         end
       end
 
+      # Sets the current entity instance to the one supplied (Or removes it if supplied `nil`)
+      #
+      # @return [TestingRecord::Model, nil]
       def current=(entity)
         if entity
           TestingRecord.logger.info("Switching current user from #{@current} to #{entity}")
@@ -79,8 +82,6 @@ module TestingRecord
       end
 
       def cache_entity(entity)
-        return unless respond_to?(:all)
-
         self.current = entity
         all << entity
         TestingRecord.logger.debug("Entity: #{entity} added to cache")
@@ -94,8 +95,6 @@ module TestingRecord
       end
 
       def ensure_deduplication(attributes)
-        return unless respond_to?(:all)
-
         pk_value = attributes[__primary_key]
         return unless with_primary_key?(pk_value)
 
