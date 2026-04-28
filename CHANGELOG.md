@@ -19,6 +19,7 @@
 ### Fixed
 
 ### Security
+- Fixed a bunch of CI security issues such as dependency cooldowns and SHA targets for actions
 
 ## [0.8] - 2026-03-10
 ### Breaking Changes
