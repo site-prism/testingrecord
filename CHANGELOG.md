@@ -1,10 +1,21 @@
 ## [Unreleased]
 ### Breaking Changes
+
+### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
+## [1.0] - 2026-04-28
+### Breaking Changes
 - Set a default primary key of `:id` to all models
 - All models require a primary key attribute to be present on each created entity
 - All entities are now deduplicated on their primary key value - but only when `caching` is enabled on the model
-
-### Removed
 
 ### Added
 - Add ability to change the default primary key for all models by using `TestingRecord.default_primary_key = :my_id`
@@ -15,8 +26,6 @@
 ### Changed
 - Deletion calls will now also purge `.current` if the deleted entity is the current entity when caching is enabled
 - All Error classes are now namespaced under `TestingRecord::Error` for correct error handling
-
-### Fixed
 
 ### Security
 - Fixed a bunch of CI security issues such as dependency cooldowns and SHA targets for actions
@@ -106,7 +115,8 @@ add all helpers to all attributes on a model
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v0.8...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v1.0...HEAD
+[1.0]:          https://github.com/site-prism/testingrecord/compare/v0.8...v1.0
 [0.8]:          https://github.com/site-prism/testingrecord/compare/v0.7...v0.8
 [0.7]:          https://github.com/site-prism/testingrecord/compare/v0.6...v0.7
 [0.6]:          https://github.com/site-prism/testingrecord/compare/v0.5...v0.6
