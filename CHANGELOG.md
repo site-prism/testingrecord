@@ -8,6 +8,7 @@
 ### Changed
 
 ### Fixed
+- Stopped an issue of primary_key detection failing due to invalid attribute types being passed in (`.to_sym` occurs earlier)
 
 ### Security
 
