@@ -8,9 +8,12 @@
 ### Changed
 
 ### Fixed
-- Stopped an issue of primary_key detection failing due to invalid attribute types being passed in (`.to_sym` occurs earlier)
 
 ### Security
+
+## [1.0.1] - 2026-05-05
+### Fixed
+- Stopped an issue of primary_key detection failing due to invalid attribute types being passed in (`.to_sym` occurs earlier)
 
 ## [1.0] - 2026-04-28
 ### Breaking Changes
@@ -116,7 +119,8 @@ add all helpers to all attributes on a model
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v1.0...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v1.0.1...HEAD
+[1.0.1]:        https://github.com/site-prism/testingrecord/compare/v1.0...v1.0.1
 [1.0]:          https://github.com/site-prism/testingrecord/compare/v0.8...v1.0
 [0.8]:          https://github.com/site-prism/testingrecord/compare/v0.7...v0.8
 [0.7]:          https://github.com/site-prism/testingrecord/compare/v0.6...v0.7
