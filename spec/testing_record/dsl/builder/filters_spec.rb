@@ -48,6 +48,38 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
     end
   end
 
+  describe '.find_by' do
+    let(:foo_entity) { model_klazz.create({ email_address: 'foo@foo.com', foo: 3, other: :foo }) }
+    let(:bar_entity) { model_klazz.create({ email_address: 'bar@bar.com', foo: 3, other: :bar }) }
+    let(:baz_entity) { model_klazz.create({ email_address: 'baz@baz.com', foo: 3, other: :baz }) }
+
+    before do
+      foo_entity
+      bar_entity
+      baz_entity
+    end
+
+    context 'with a simple 1 attribute query' do
+      it 'returns a collection of entities that match the query' do
+        expect(model_klazz.find_by({ foo: 3 })).to eq([foo_entity, bar_entity, baz_entity])
+      end
+
+      it 'returns a blank collection when no entities match the query' do
+        expect(model_klazz.find_by({ foo: 4 })).to eq([])
+      end
+    end
+
+    context 'with a more complex set of attributes as a query' do
+      it 'returns a collection of entities that match all query attributes' do
+        expect(model_klazz.find_by({ foo: 3, other: :foo })).to eq([foo_entity])
+      end
+
+      it 'returns a blank collection when no entities match all query attributes' do
+        expect(model_klazz.find_by({ foo: 3, other: :jeff })).to eq([])
+      end
+    end
+  end
+
   describe '.with_id' do
     before { model_klazz.primary_key :id }
     after { model_klazz.primary_key :email_address }
