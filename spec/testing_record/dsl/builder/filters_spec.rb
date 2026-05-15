@@ -71,11 +71,11 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
 
     context 'with a more complex set of attributes as a query' do
       it 'returns a collection of entities that match all query attributes' do
-        expect(model_klazz.find_by({ foo: 3, other: :foo })).to eq([foo_entity])
+        expect(model_klazz.find_by({ foo: 3, other: :foo, email_address: 'foo@foo.com' })).to eq([foo_entity])
       end
 
       it 'returns a blank collection when no entities match all query attributes' do
-        expect(model_klazz.find_by({ foo: 3, other: :jeff })).to eq([])
+        expect(model_klazz.find_by({ foo: 3, other: :jeff, email_address: 'foo@foo.com' })).to eq([])
       end
     end
   end
