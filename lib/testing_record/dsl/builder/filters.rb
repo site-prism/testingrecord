@@ -13,6 +13,19 @@ module TestingRecord
           find_by(attributes).any?
         end
 
+        # Finds all entities that match specified attribute values
+        #
+        # @return [Array<TestingRecord::Model>]
+        def find_by(attributes)
+          pool = all
+          attributes.each do |key, value|
+            TestingRecord.logger.debug("Current user pool size: #{pool.length}")
+            TestingRecord.logger.debug("Filtering User list by #{key}: #{value}")
+            pool = pool.select { |entity| entity.attributes[key] == value }
+          end
+          pool
+        end
+
         # Finds an entity with the provided email address
         #   If one is found, set it as the current entity
         #
@@ -49,21 +62,6 @@ module TestingRecord
         # @return [TestingRecord::Model, nil]
         def with_primary_key(primary_key)
           find_by({ __primary_key => primary_key })&.first&.tap { |entity| entity.class.current = entity }
-        end
-
-        private
-
-        # Finds all entities that match specified attribute values
-        #
-        # @return [Array<TestingRecord::Model>]
-        def find_by(attributes)
-          pool = all
-          attributes.each do |key, value|
-            TestingRecord.logger.debug("Current user pool size: #{pool.length}")
-            TestingRecord.logger.debug("Filtering User list by #{key}: #{value}")
-            pool = pool.select { |entity| entity.attributes[key] == value }
-          end
-          pool
         end
       end
     end

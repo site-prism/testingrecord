@@ -6,6 +6,8 @@
 ### Added
 
 ### Changed
+- Exposed `.find_by` as a public method for more complex querying of models, and to allow people to write
+their own custom filters on top of this method
 
 ### Fixed
 
