@@ -8,8 +8,13 @@
 ### Changed
 - Exposed `.find_by` as a public method for more complex querying of models, and to allow people to write
 their own custom filters on top of this method
+- Hyphenated keys when passed into `.create` or `#update` will now be converted to underscores to ensure consistency with
+ruby conventions and to prevent issues with helper generation
+- `.with_email` filter now supports `email_address`, `email` and `email-address` key names for better flexibility when
+filtering on email addresses
 
 ### Fixed
+- Hyphenated keys are not permitted for the `primary_key` setting as this will cause issues with ruby
 
 ### Security
 

@@ -85,6 +85,21 @@ RSpec.describe TestingRecord::Model do
         expect(primary_model_entity).to respond_to(:attributes, :id, :foo, :bar)
       end
     end
+
+    context 'with any hyphenated keys' do
+      before do
+        FakeModel.caching :enabled
+        FakeModel.create({ id: 1, snake_case: :whatever, 'hyphenated-case': :no_op, 'hyphenated-case-two': :no_op })
+      end
+
+      it 'stores the hyphenated keys as snake_cased keys in the attributes hash' do
+        expect(FakeModel.current.attributes).to eq({ hyphenated_case: :no_op, hyphenated_case_two: :no_op, id: 1, snake_case: :whatever })
+      end
+
+      it 'stores the hyphenated keys as snake_cased reader methods' do
+        expect(FakeModel.current).to respond_to(:hyphenated_case, :hyphenated_case_two)
+      end
+    end
   end
 
   describe '.current=' do

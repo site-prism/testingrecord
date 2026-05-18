@@ -31,7 +31,12 @@ module TestingRecord
         #
         # @return [TestingRecord::Model, nil]
         def with_email(email_address)
-          find_by({ email_address: })&.first&.tap { |entity| entity.class.current = entity }
+          email_address_results =
+            find_by({ email_address: }).first ||
+            find_by({ email: email_address }).first ||
+            find_by({ 'email-address': email_address }).first
+
+          email_address_results&.tap { |entity| entity.class.current = entity }
         end
 
         # Checks to see whether an entity exists with the provided id
