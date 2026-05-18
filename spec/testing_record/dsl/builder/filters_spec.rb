@@ -57,13 +57,14 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
         model_klazz.create({ 'email-address': 'baz@bar.com' })
       end
 
-      it 'finds the first matching model' do
+      it 'finds the first matching model (which is stored as a snake_cased key)' do
         expect(model_klazz.with_email('foo@bar.com')).to be_a TestingRecord::Model
       end
     end
 
     context 'when entity exists with an `email` key' do
       before do
+        model_klazz.primary_key :email
         model_klazz.create({ email: 'foo@bar.com' })
         model_klazz.create({ email: 'baz@bar.com' })
       end

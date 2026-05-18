@@ -25,7 +25,7 @@ module TestingRecord
       #
       # @return [TestingRecord::Model]
       def create(attributes)
-        attributes.transform_keys!(&:to_sym)
+        attributes.transform_keys! { |key| key.to_s.tr('-', '_').to_sym }
         if respond_to?(:all)
           create_with_caching(attributes)
         else
@@ -135,7 +135,7 @@ module TestingRecord
     #
     # @return [TestingRecord::Model]
     def update(attrs)
-      attrs.transform_keys(&:to_sym).each do |key, value|
+      attrs.transform_keys! { |key| key.to_s.tr('-', '_').to_sym }.each do |key, value|
         attributes[key] = value
         instance_variable_set("@#{key}", value)
         TestingRecord.logger.info("Updated '#{key}' on the #{self.class} entity to be '#{value}'")
