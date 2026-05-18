@@ -10,6 +10,7 @@
 their own custom filters on top of this method
 
 ### Fixed
+- Hyphenated keys are not permitted for the `primary_key` setting as this will cause issues with ruby
 
 ### Security
 
