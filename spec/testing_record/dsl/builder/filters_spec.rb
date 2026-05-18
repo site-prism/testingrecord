@@ -5,6 +5,10 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
     Class.new(TestingRecord::Model) do
       caching :enabled
       primary_key :email_address
+
+      def self.name
+        'FakeModel'
+      end
     end
   end
 
@@ -36,10 +40,32 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
       end
     end
 
-    context 'when entity exists' do
+    context 'when entity exists with an `email_address` key' do
       before do
         model_klazz.create({ email_address: 'foo@bar.com' })
         model_klazz.create({ email_address: 'baz@bar.com' })
+      end
+
+      it 'finds the first matching model' do
+        expect(model_klazz.with_email('foo@bar.com')).to be_a TestingRecord::Model
+      end
+    end
+
+    context 'when entity exists with an `email-address` key' do
+      before do
+        model_klazz.create({ 'email-address': 'foo@bar.com' })
+        model_klazz.create({ 'email-address': 'baz@bar.com' })
+      end
+
+      it 'finds the first matching model' do
+        expect(model_klazz.with_email('foo@bar.com')).to be_a TestingRecord::Model
+      end
+    end
+
+    context 'when entity exists with an `email` key' do
+      before do
+        model_klazz.create({ email: 'foo@bar.com' })
+        model_klazz.create({ email: 'baz@bar.com' })
       end
 
       it 'finds the first matching model' do
