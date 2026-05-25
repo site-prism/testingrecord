@@ -4,6 +4,10 @@
 ### Removed
 
 ### Added
+- Added a new conditional piece of logic for filtering. This allows you to filter using "AND" logic or "OR" logic
+  - Filters using "AND" logic will require all attributes to match the criteria specified in order for an entity to be returned
+  - Filters using "OR" logic will require at least one attribute to match the criteria specified in order for an entity to be returned
+  - By default, all filters will use "AND" logic, but you can specify "OR" logic by using the `:logic :or` keyword argument when defining a filter
 
 ### Changed
 - Exposed `.find_by` as a public method for more complex querying of models, and to allow people to write
