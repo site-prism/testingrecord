@@ -17,6 +17,7 @@ ruby conventions and to prevent issues with helper generation
 - `.with_email` filter now supports `email_address`, `email` and `email-address` key names for better flexibility when
 filtering on email addresses
 - Refactored `.find_by` to use more ruby-like methods to improve performance rather than repeated iterations and selections
+- Refactored `.with_email` filter to use new "or" logic in `.find_by` for better performance
 
 ### Fixed
 - Hyphenated keys are not permitted for the `primary_key` setting as this will cause issues with ruby
