@@ -119,22 +119,22 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
     end
 
     context 'with a simple 1 attribute query' do
-      it 'returns a collection of entities that match the query' do
+      it 'returns a collection of entities that match the query - behaving the same as `:and` logic' do
         expect(model_klazz.find_by({ foo: 3 }, logic: :or)).to eq([foo_entity, bar_entity, baz_entity])
       end
 
-      it 'returns a blank collection when no entities match the query' do
+      it 'returns a blank collection when no entities match the query - behaving the same as `:and` logic' do
         expect(model_klazz.find_by({ foo: 4 }, logic: :or)).to eq([])
       end
     end
 
     context 'with a more complex set of attributes as a query' do
-      it 'returns a collection of entities that match all query attributes' do
-        expect(model_klazz.find_by({ foo: 3, other: :foo, email_address: 'foo@foo.com' }, logic: :or)).to eq([foo_entity])
+      it 'returns a collection of entities that match any of the query attributes' do
+        expect(model_klazz.find_by({ other: :bar, email_address: 'foo@foo.com' }, logic: :or)).to eq([foo_entity, bar_entity])
       end
 
-      it 'returns a blank collection when no entities match all query attributes' do
-        expect(model_klazz.find_by({ foo: 3, other: :jeff, email_address: 'foo@foo.com' }, logic: :or)).to eq([])
+      it 'returns a blank collection when no entities match any of the query attributes' do
+        expect(model_klazz.find_by({ foo: 55, other: :jeff, email_address: 'jeff@foo.com' }, logic: :or)).to eq([])
       end
     end
   end
