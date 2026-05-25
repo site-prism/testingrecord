@@ -21,7 +21,7 @@ module TestingRecord
         #
         # @return [Array<TestingRecord::Model>]
         def find_by(attributes, logic: :and)
-          raise InvalidArgumentError, 'Invalid filtering logic option, must be `:and` or `:or`' unless filter_logic_valid?(logic)
+          raise Error::InvalidArgumentError, 'Invalid filtering logic option, must be `:and` or `:or`' unless filter_logic_valid?(logic)
           TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
           if logic == :and
             all.select do |entity|

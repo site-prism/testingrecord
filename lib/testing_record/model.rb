@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'automation_helpers/extensions/string'
+
 require_relative 'dsl'
 
 module TestingRecord
