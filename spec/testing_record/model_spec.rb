@@ -86,6 +86,14 @@ RSpec.describe TestingRecord::Model do
       end
     end
 
+    context 'with an invalid caching setting' do
+      it 'does not permit the class to be configured with an invalid caching setting' do
+        expect { FakeModel.caching :foo }
+          .to raise_error(TestingRecord::Error::InvalidConfigurationError)
+          .with_message('Invalid caching option, must be `:enabled` or `:disabled`')
+      end
+    end
+
     context 'with any hyphenated keys' do
       before do
         FakeModel.caching :enabled

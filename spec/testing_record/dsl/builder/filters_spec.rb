@@ -75,7 +75,7 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
     end
   end
 
-  describe '.find_by' do
+  describe '.find_by - `:and` logic' do
     let(:foo_entity) { model_klazz.create({ email_address: 'foo@foo.com', foo: 3, other: :foo }) }
     let(:bar_entity) { model_klazz.create({ email_address: 'bar@bar.com', foo: 3, other: :bar }) }
     let(:baz_entity) { model_klazz.create({ email_address: 'baz@baz.com', foo: 3, other: :baz }) }
@@ -104,6 +104,48 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
       it 'returns a blank collection when no entities match all query attributes' do
         expect(model_klazz.find_by({ foo: 3, other: :jeff, email_address: 'foo@foo.com' })).to eq([])
       end
+    end
+  end
+
+  describe '.find_by - `:or` logic' do
+    let(:foo_entity) { model_klazz.create({ email_address: 'foo@foo.com', foo: 3, other: :foo }) }
+    let(:bar_entity) { model_klazz.create({ email_address: 'bar@bar.com', foo: 3, other: :bar }) }
+    let(:baz_entity) { model_klazz.create({ email_address: 'baz@baz.com', foo: 3, other: :baz }) }
+
+    before do
+      foo_entity
+      bar_entity
+      baz_entity
+    end
+
+    context 'with a simple 1 attribute query' do
+      it 'returns a collection of entities that match the query - behaving the same as `:and` logic' do
+        expect(model_klazz.find_by({ foo: 3 }, logic: :or)).to eq([foo_entity, bar_entity, baz_entity])
+      end
+
+      it 'returns a blank collection when no entities match the query - behaving the same as `:and` logic' do
+        expect(model_klazz.find_by({ foo: 4 }, logic: :or)).to eq([])
+      end
+    end
+
+    context 'with a more complex set of attributes as a query' do
+      it 'returns a collection of entities that match any of the query attributes' do
+        expect(model_klazz.find_by({ other: :bar, email_address: 'foo@foo.com' }, logic: :or)).to eq([foo_entity, bar_entity])
+      end
+
+      it 'returns a blank collection when no entities match any of the query attributes' do
+        expect(model_klazz.find_by({ foo: 55, other: :jeff, email_address: 'jeff@foo.com' }, logic: :or)).to eq([])
+      end
+    end
+  end
+
+  describe '.find_by - invalid logic' do
+    let(:foo_entity) { model_klazz.create({ email_address: 'foo@foo.com', foo: 3, other: :foo }) }
+
+    it 'raises an error that the logic is not valid' do
+      expect { model_klazz.find_by({ foo: 3 }, logic: :foo) }
+        .to raise_error(TestingRecord::Error::InvalidArgumentError)
+        .with_message('Invalid filtering logic option, must be `:and` or `:or`')
     end
   end
 

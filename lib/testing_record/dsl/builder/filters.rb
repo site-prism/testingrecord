@@ -6,6 +6,8 @@ module TestingRecord
       # [TestingRecord::DSL::Builder::Filters]
       # Ways in which we can filter our collection to find specific models
       module Filters
+        include DSL::Validation::Input
+
         # Checks to see whether an entity exists with the provided attributes
         #
         # @return [Boolean]
@@ -14,16 +16,19 @@ module TestingRecord
         end
 
         # Finds all entities that match specified attribute values
+        #   attributes (Hash) -> The attributes you wish to filter on, each is iterated through sequentially
+        #   :logic (Symbol) -> Whether to use `and` (Intersection), or `or` (Union), logic to combine each key in attributes hash
         #
         # @return [Array<TestingRecord::Model>]
-        def find_by(attributes)
-          pool = all
-          attributes.each do |key, value|
-            TestingRecord.logger.debug("Current user pool size: #{pool.length}")
-            TestingRecord.logger.debug("Filtering User list by #{key}: #{value}")
-            pool = pool.select { |entity| entity.attributes[key] == value }
+        def find_by(attributes, logic: :and)
+          raise Error::InvalidArgumentError, 'Invalid filtering logic option, must be `:and` or `:or`' unless filter_logic_valid?(logic)
+
+          TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
+          if logic == :and
+            find_by_and(attributes)
+          else
+            find_by_or(attributes)
           end
-          pool
         end
 
         # Finds an entity with the provided email address
@@ -67,6 +72,24 @@ module TestingRecord
         # @return [TestingRecord::Model, nil]
         def with_primary_key(primary_key)
           find_by({ __primary_key => primary_key })&.first&.tap { |entity| entity.class.current = entity }
+        end
+
+        private
+
+        def find_by_and(attributes)
+          all.select do |entity|
+            attributes.all? do |key, value|
+              entity.attributes[key] == value
+            end
+          end
+        end
+
+        def find_by_or(attributes)
+          all.select do |entity|
+            attributes.any? do |key, value|
+              entity.attributes[key] == value
+            end
+          end
         end
       end
     end

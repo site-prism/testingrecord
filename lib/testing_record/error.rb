@@ -5,5 +5,6 @@ module TestingRecord
     class AttributeError < StandardError; end
     class EntityError < StandardError; end
     class InvalidConfigurationError < StandardError; end
+    class InvalidArgumentError < StandardError; end
   end
 end
