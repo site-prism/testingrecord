@@ -15,18 +15,18 @@ module TestingRecord
 
         # Finds all entities that match specified attribute values
         #   attributes (Hash) -> The attributes you wish to filter on, each is iterated through sequentially
-        #   :logic (Symbol) -> Whether to use `AND` or `OR` logic to combine each sequential key in attributes hash
+        #   :logic (Symbol) -> Whether to use `and` (Intersection), or `or` (Union), logic to combine each key in attributes hash
         #
         # @return [Array<TestingRecord::Model>]
-        def find_by(attributes, logic: :AND)
+        def find_by(attributes, logic: :and)
           TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
-          if logic == :OR
+          if logic == :and
             all.select do |entity|
-              attributes.any? { |key, value| entity.attributes[key] == value }
+              attributes.all? { |key, value| entity.attributes[key] == value }
             end
           else
             all.select do |entity|
-              attributes.all? { |key, value| entity.attributes[key] == value }
+              attributes.any? { |key, value| entity.attributes[key] == value }
             end
           end
         end
