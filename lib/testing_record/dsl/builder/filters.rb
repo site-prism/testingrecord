@@ -22,11 +22,11 @@ module TestingRecord
           TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
           if logic == :OR
             all.select do |entity|
-              attributes.any? { |key, value| entity.attributes.key?(key) && entity.attributes.fetch(key) == value }
+              attributes.any? { |key, value| entity.attributes[key] == value }
             end
           else
             all.select do |entity|
-              attributes.all? { |key, value| entity.attributes.fetch(key) == value }
+              attributes.all? { |key, value| entity.attributes[key] == value }
             end
           end
         end
