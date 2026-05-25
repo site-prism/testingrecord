@@ -4,10 +4,10 @@
 ### Removed
 
 ### Added
-- Added a new conditional piece of logic for filtering. This allows you to filter using "AND" logic or "OR" logic
+- Added a new conditional piece of logic for filtering whilst using `#find_by`. This allows you to filter using "AND" logic or "OR" logic
   - Filters using "AND" logic will require all attributes to match the criteria specified in order for an entity to be returned
   - Filters using "OR" logic will require at least one attribute to match the criteria specified in order for an entity to be returned
-  - By default, all filters will use "AND" logic, but you can specify "OR" logic by using the `:logic :or` keyword argument when defining a filter
+  - By default, all filters will use "AND" logic, but you can specify "OR" logic by using the `:logic :or` keyword argument when defining a filter that uses `#find_by`
 
 ### Changed
 - Exposed `.find_by` as a public method for more complex querying of models, and to allow people to write
@@ -16,6 +16,7 @@ their own custom filters on top of this method
 ruby conventions and to prevent issues with helper generation
 - `.with_email` filter now supports `email_address`, `email` and `email-address` key names for better flexibility when
 filtering on email addresses
+- Refactored `.find_by` to use more ruby-like methods to improve performance rather than repeated iterations and selections
 
 ### Fixed
 - Hyphenated keys are not permitted for the `primary_key` setting as this will cause issues with ruby
