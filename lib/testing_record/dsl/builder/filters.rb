@@ -6,6 +6,8 @@ module TestingRecord
       # [TestingRecord::DSL::Builder::Filters]
       # Ways in which we can filter our collection to find specific models
       module Filters
+        include DSL::Validation::Input
+
         # Checks to see whether an entity exists with the provided attributes
         #
         # @return [Boolean]
@@ -19,6 +21,7 @@ module TestingRecord
         #
         # @return [Array<TestingRecord::Model>]
         def find_by(attributes, logic: :and)
+          raise InvalidArgumentError, 'Invalid filtering logic option, must be `:and` or `:or`' unless filter_logic_valid?(logic)
           TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
           if logic == :and
             all.select do |entity|
