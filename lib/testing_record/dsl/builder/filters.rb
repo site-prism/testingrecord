@@ -22,15 +22,12 @@ module TestingRecord
         # @return [Array<TestingRecord::Model>]
         def find_by(attributes, logic: :and)
           raise Error::InvalidArgumentError, 'Invalid filtering logic option, must be `:and` or `:or`' unless filter_logic_valid?(logic)
+
           TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
           if logic == :and
-            all.select do |entity|
-              attributes.all? { |key, value| entity.attributes[key] == value }
-            end
+            find_by_and(attributes)
           else
-            all.select do |entity|
-              attributes.any? { |key, value| entity.attributes[key] == value }
-            end
+            find_by_or(attributes)
           end
         end
 
@@ -75,6 +72,24 @@ module TestingRecord
         # @return [TestingRecord::Model, nil]
         def with_primary_key(primary_key)
           find_by({ __primary_key => primary_key })&.first&.tap { |entity| entity.class.current = entity }
+        end
+
+        private
+
+        def find_by_and(attributes)
+          all.select do |entity|
+            attributes.all? do |key, value|
+              entity.attributes[key] == value
+            end
+          end
+        end
+
+        def find_by_or(attributes)
+          all.select do |entity|
+            attributes.any? do |key, value|
+              entity.attributes[key] == value
+            end
+          end
         end
       end
     end
