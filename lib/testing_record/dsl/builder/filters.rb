@@ -14,16 +14,21 @@ module TestingRecord
         end
 
         # Finds all entities that match specified attribute values
+        #   attributes (Hash) -> The attributes you wish to filter on, each is iterated through sequentially
+        #   :logic (Symbol) -> Whether to use `AND` or `OR` logic to combine each sequential key in attributes hash
         #
         # @return [Array<TestingRecord::Model>]
-        def find_by(attributes)
-          pool = all
-          attributes.each do |key, value|
-            TestingRecord.logger.debug("Current user pool size: #{pool.length}")
-            TestingRecord.logger.debug("Filtering User list by #{key}: #{value}")
-            pool = pool.select { |entity| entity.attributes[key] == value }
+        def find_by(attributes, logic: :AND)
+          TestingRecord.logger.debug("Filtering Entity: '#{self}' list by #{attributes}. Logic: '#{logic}'")
+          if logic == :OR
+            all.select do |entity|
+              attributes.any? { |key, value| entity.key?(key) && entity.fetch(key) == value }
+            end
+          else
+            all.select do |entity|
+              attributes.all? { |key, value| entity.fetch(key) == value }
+            end
           end
-          pool
         end
 
         # Finds an entity with the provided email address
