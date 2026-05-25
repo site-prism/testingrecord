@@ -75,7 +75,7 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
     end
   end
 
-  describe '.find_by' do
+  describe '.find_by - AND logic' do
     let(:foo_entity) { model_klazz.create({ email_address: 'foo@foo.com', foo: 3, other: :foo }) }
     let(:bar_entity) { model_klazz.create({ email_address: 'bar@bar.com', foo: 3, other: :bar }) }
     let(:baz_entity) { model_klazz.create({ email_address: 'baz@baz.com', foo: 3, other: :baz }) }
@@ -103,6 +103,38 @@ RSpec.describe TestingRecord::DSL::Builder::Filters do
 
       it 'returns a blank collection when no entities match all query attributes' do
         expect(model_klazz.find_by({ foo: 3, other: :jeff, email_address: 'foo@foo.com' })).to eq([])
+      end
+    end
+  end
+
+  describe '.find_by - OR logic' do
+    let(:foo_entity) { model_klazz.create({ email_address: 'foo@foo.com', foo: 3, other: :foo }) }
+    let(:bar_entity) { model_klazz.create({ email_address: 'bar@bar.com', foo: 3, other: :bar }) }
+    let(:baz_entity) { model_klazz.create({ email_address: 'baz@baz.com', foo: 3, other: :baz }) }
+
+    before do
+      foo_entity
+      bar_entity
+      baz_entity
+    end
+
+    context 'with a simple 1 attribute query' do
+      it 'returns a collection of entities that match the query' do
+        expect(model_klazz.find_by({ foo: 3 }, logic: :OR)).to eq([foo_entity, bar_entity, baz_entity])
+      end
+
+      it 'returns a blank collection when no entities match the query' do
+        expect(model_klazz.find_by({ foo: 4 }, logic: :OR)).to eq([])
+      end
+    end
+
+    context 'with a more complex set of attributes as a query' do
+      it 'returns a collection of entities that match all query attributes' do
+        expect(model_klazz.find_by({ foo: 3, other: :foo, email_address: 'foo@foo.com' }, logic: :OR)).to eq([foo_entity])
+      end
+
+      it 'returns a blank collection when no entities match all query attributes' do
+        expect(model_klazz.find_by({ foo: 3, other: :jeff, email_address: 'foo@foo.com' }, logic: :OR)).to eq([])
       end
     end
   end
