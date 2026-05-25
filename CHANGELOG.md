@@ -4,6 +4,15 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Security
+
+## [1.1] - 2026-05-25
+### Added
 - Added a new conditional piece of logic for filtering whilst using `#find_by`. This allows you to filter using "AND" logic or "OR" logic
   - Filters using "AND" logic will require all attributes to match the criteria specified in order for an entity to be returned
   - Filters using "OR" logic will require at least one attribute to match the criteria specified in order for an entity to be returned
@@ -21,8 +30,6 @@ filtering on email addresses
 
 ### Fixed
 - Hyphenated keys are not permitted for the `primary_key` setting as this will cause issues with ruby
-
-### Security
 
 ## [1.0.1] - 2026-05-05
 ### Fixed
@@ -132,7 +139,8 @@ add all helpers to all attributes on a model
 ### Added
 - Initial gem creation
 
-[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v1.0.1...HEAD
+[Unreleased]:   https://github.com/site-prism/testingrecord/compare/v1.1...HEAD
+[1.1]:          https://github.com/site-prism/testingrecord/compare/v1.0.1...v1.1
 [1.0.1]:        https://github.com/site-prism/testingrecord/compare/v1.0...v1.0.1
 [1.0]:          https://github.com/site-prism/testingrecord/compare/v0.8...v1.0
 [0.8]:          https://github.com/site-prism/testingrecord/compare/v0.7...v0.8
