@@ -11,8 +11,6 @@ module TestingRecord
     extend DSL::Builder::Helpers
     extend DSL::Builder::Settings
 
-    attr_reader :attributes
-
     class << self
       attr_reader :current
 
@@ -109,6 +107,8 @@ module TestingRecord
         raise Error::AttributeError, "#{name} entity has not been supplied with the primary key: #{__primary_key}"
       end
     end
+
+    attr_reader :attributes
 
     def initialize(attributes = {})
       @attributes = attributes
